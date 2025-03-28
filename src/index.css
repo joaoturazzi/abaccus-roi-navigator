@@ -46,7 +46,7 @@
   }
 
   .progress-bar {
-    @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+    @apply h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner;
   }
 
   .progress-bar-fill {
@@ -56,6 +56,26 @@
 
 /* Custom animation classes */
 @layer components {
+  .glass-card {
+    @apply bg-white shadow-card border border-gray-100 backdrop-blur-sm transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    @apply shadow-card-hover border-gray-200;
+  }
+
+  .input-elegant {
+    @apply transition-all duration-200 border border-gray-200 focus:border-abaccus-primary focus:ring focus:ring-abaccus-light focus:ring-opacity-50;
+  }
+
+  .button-primary {
+    @apply bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white shadow-button hover:shadow-lg transition-all duration-300 hover:translate-y-[-1px];
+  }
+
+  .button-outline {
+    @apply border border-abaccus-primary text-abaccus-primary bg-white hover:bg-abaccus-light transition-all duration-300;
+  }
+
   .card-animated {
     @apply opacity-0 transform translate-y-4;
     animation: card-enter 0.5s forwards;
@@ -83,4 +103,63 @@
       transform: translateY(0);
     }
   }
+  
+  /* Elegant form styling */
+  .form-elegant .form-group {
+    @apply mb-6;
+  }
+  
+  .form-elegant label {
+    @apply block mb-2 text-sm font-medium text-abaccus-dark;
+  }
+  
+  .form-elegant input, 
+  .form-elegant select {
+    @apply input-elegant rounded-md shadow-input;
+  }
+  
+  /* Card design improvements */
+  .card-header-gradient {
+    @apply bg-gradient-to-r from-abaccus-dark to-abaccus-primary text-white rounded-t-lg;
+  }
+  
+  /* Results styling */
+  .result-item {
+    @apply py-3 border-b border-gray-100 flex justify-between items-center;
+  }
+  
+  .result-value {
+    @apply font-semibold text-abaccus-primary;
+  }
+  
+  .result-highlight {
+    @apply text-lg font-bold text-abaccus-primary;
+  }
+}
+
+/* Tooltip improvements */
+.tooltip {
+  @apply absolute z-20 bg-gray-800 text-white text-xs py-1.5 px-2.5 rounded max-w-xs;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.tooltip::after {
+  content: '';
+  @apply absolute w-2 h-2 bg-gray-800 rotate-45;
+}
+
+.tooltip.tooltip-top::after {
+  @apply -bottom-1 left-1/2 -translate-x-1/2;
+}
+
+.tooltip.tooltip-bottom::after {
+  @apply -top-1 left-1/2 -translate-x-1/2;
+}
+
+.tooltip.tooltip-left::after {
+  @apply -right-1 top-1/2 -translate-y-1/2;
+}
+
+.tooltip.tooltip-right::after {
+  @apply -left-1 top-1/2 -translate-y-1/2;
 }

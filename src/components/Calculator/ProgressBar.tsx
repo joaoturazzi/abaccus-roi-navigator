@@ -11,13 +11,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
   
   return (
     <div className="w-full max-w-3xl mx-auto mb-8">
-      <div className="flex justify-between text-sm text-gray-500 mb-1">
-        <span>Etapa {currentStep} de {totalSteps}</span>
-        <span>{Math.round(percentage)}%</span>
+      <div className="flex justify-between text-sm text-gray-600 mb-2">
+        <span className="font-medium">Etapa {currentStep} de {totalSteps}</span>
+        <span className="font-medium">{Math.round(percentage)}%</span>
       </div>
-      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner">
         <div 
-          className="h-full bg-abaccus-primary transition-all duration-300 ease-in-out" 
+          className="h-full progress-bar-fill rounded-full transition-all duration-500 ease-out" 
           style={{ width: `${percentage}%` }}
         ></div>
       </div>
