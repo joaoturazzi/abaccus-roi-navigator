@@ -9,8 +9,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface RevenueLossStepProps {
   formData: {
-    averageTicket: number;
-    affectedCustomers: number;
+    revenueLossEstimate: number;
     changeFrequency: number;
     delayDays: number;
     criticalityImpact: number;
@@ -26,7 +25,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
   onPrevious,
   onNext,
 }) => {
-  const { averageTicket, affectedCustomers, changeFrequency, delayDays, criticalityImpact } = formData;
+  const { revenueLossEstimate, changeFrequency, delayDays, criticalityImpact } = formData;
   
   const frequencyOptions = [
     { value: 1, label: "1x por mês", description: "Raramente precisamos alterar regras" },
@@ -40,8 +39,15 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
     { value: 0.2, label: "Médio (20%)", description: "Impacto moderado no negócio" },
     { value: 0.3, label: "Alto (30%)", description: "Impacto significativo no negócio" }
   ];
+
+  const revenueLossOptions = [
+    { value: 1000000, label: "Até R$ 10.000 por mês", description: "Impacto financeiro baixo" },
+    { value: 3000000, label: "Entre R$ 10.000 e R$ 50.000 por mês", description: "Impacto financeiro moderado" },
+    { value: 7500000, label: "Entre R$ 50.000 e R$ 100.000 por mês", description: "Impacto financeiro significativo" },
+    { value: 15000000, label: "Acima de R$ 100.000 por mês", description: "Impacto financeiro alto" }
+  ];
   
-  const isFormValid = averageTicket > 0 && affectedCustomers > 0 && changeFrequency > 0 && delayDays > 0 && criticalityImpact > 0;
+  const isFormValid = revenueLossEstimate > 0 && changeFrequency > 0 && delayDays > 0;
 
   return (
     <Card className="w-full max-w-3xl mx-auto animate-fade-in">
@@ -52,20 +58,13 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
       </CardHeader>
       <CardContent className="pt-6 pb-8 px-6">
         <div className="space-y-4">
-          <MoneyInput
-            id="averageTicket"
-            label="Qual o ticket médio por cliente afetado?"
-            value={averageTicket}
-            onChange={(value) => onChange('averageTicket', value)}
-            tooltip="Valor médio que um cliente paga pelo seu produto/serviço"
-          />
-          
-          <NumberInput
-            id="affectedCustomers"
-            label="Quantos clientes, em média, são impactados quando há um atraso?"
-            value={affectedCustomers}
-            onChange={(value) => onChange('affectedCustomers', value)}
-            tooltip="Número de clientes afetados por cada alteração em regras"
+          <SelectInput
+            id="revenueLossEstimate"
+            label="Quanto você estimaria que a sua empresa perde com o atraso da implementação dessas alterações?"
+            value={revenueLossEstimate}
+            onChange={(value) => onChange('revenueLossEstimate', Number(value))}
+            options={revenueLossOptions}
+            tooltip="Considere perdas como: vendas não realizadas, comissionamento incorreto, inadimplência, procedimentos não aprovados, rotas ineficientes, etc."
           />
           
           <SelectInput
@@ -79,11 +78,11 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
           
           <NumberInput
             id="delayDays"
-            label="Tempo médio de atraso (em dias)?"
+            label="Tempo médio para implementar as mudanças (em dias)?"
             value={delayDays}
             onChange={(value) => onChange('delayDays', value)}
             suffix="dias"
-            tooltip="Tempo médio entre a solicitação e implementação das alterações"
+            tooltip="Tempo médio entre a solicitação e implementação completa das alterações"
           />
           
           <SelectInput

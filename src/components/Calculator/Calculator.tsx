@@ -24,15 +24,15 @@ const Calculator = () => {
   // Step 1: Operational Cost data
   const [operationalCostData, setOperationalCostData] = useState({
     changesPerMonth: 10,
-    hoursPerChange: 8,
     peopleInvolved: 3,
+    hoursPerChange: 8,
     averageSalary: 800000, // R$ 8,000.00 in cents
+    implementationType: "internal", // Added new field
   });
   
   // Step 2: Revenue Loss data
   const [revenueLossData, setRevenueLossData] = useState({
-    averageTicket: 500000, // R$ 5,000.00 in cents
-    affectedCustomers: 10,
+    revenueLossEstimate: 3000000, // R$ 30,000.00 in cents (middle of 10k-50k range)
     changeFrequency: 2, // 2x per month
     delayDays: 5,
     criticalityImpact: 0.2, // 20%
@@ -44,7 +44,7 @@ const Calculator = () => {
   const totalSteps = 4; // Including lead capture form and results
   
   // Handle changes to operational cost data
-  const handleOperationalCostChange = (key: string, value: number) => {
+  const handleOperationalCostChange = (key: string, value: number | string) => {
     setOperationalCostData(prev => ({ ...prev, [key]: value }));
   };
   
@@ -70,24 +70,21 @@ const Calculator = () => {
   
   // Calculate results
   const calculateResults = () => {
-    const { changesPerMonth, hoursPerChange, peopleInvolved, averageSalary } = operationalCostData;
-    const { averageTicket, affectedCustomers, changeFrequency, criticalityImpact } = revenueLossData;
+    const { changesPerMonth, hoursPerChange, peopleInvolved, averageSalary, implementationType } = operationalCostData;
+    const { revenueLossEstimate, changeFrequency, criticalityImpact } = revenueLossData;
     
     // Calculate operational costs
     const { monthlyCost, annualCost } = calculateOperationalCosts(
       changesPerMonth,
       hoursPerChange,
       peopleInvolved,
-      averageSalary
+      averageSalary,
+      implementationType
     );
     
-    // Calculate revenue losses
-    const { monthlyRevenueLoss, annualRevenueLoss } = calculateRevenueLosses(
-      averageTicket,
-      affectedCustomers,
-      changeFrequency,
-      criticalityImpact
-    );
+    // Use the direct estimate for revenue losses
+    const monthlyRevenueLoss = revenueLossEstimate / 100; // Convert from cents to BRL
+    const annualRevenueLoss = monthlyRevenueLoss * 12;
     
     // Calculate ROI with Abaccus
     const { totalAnnualWaste, abaccusCost, potentialSavings, roi } = calculateROI(

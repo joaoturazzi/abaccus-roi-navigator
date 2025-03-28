@@ -1,4 +1,3 @@
-
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import jsPDF from "jspdf";
@@ -23,16 +22,22 @@ export function calculateOperationalCosts(
   changesPerMonth: number,
   hoursPerChange: number,
   peopleInvolved: number,
-  averageSalary: number
+  averageSalary: number,
+  implementationType: string
 ) {
   // Convert averageSalary from cents to BRL
   const salaryInBRL = averageSalary / 100;
   
-  // Calculate hourly cost (assuming 160 work hours per month)
-  const hourlyRate = salaryInBRL / 160;
+  let monthlyCost = 0;
   
-  // Calculate monthly operational cost
-  const monthlyCost = changesPerMonth * hoursPerChange * peopleInvolved * hourlyRate;
+  if (implementationType === "consulting") {
+    // For consulting, averageSalary is the hourly rate
+    monthlyCost = changesPerMonth * hoursPerChange * salaryInBRL;
+  } else {
+    // For internal teams, calculate hourly cost (assuming 160 work hours per month)
+    const hourlyRate = salaryInBRL / 160;
+    monthlyCost = changesPerMonth * hoursPerChange * peopleInvolved * hourlyRate;
+  }
   
   // Calculate annual operational cost
   const annualCost = monthlyCost * 12;
@@ -40,19 +45,10 @@ export function calculateOperationalCosts(
   return { monthlyCost, annualCost };
 }
 
-// Calculate revenue losses
+// Calculate revenue losses - Now we just pass through the direct estimate
 export function calculateRevenueLosses(
-  averageTicket: number,
-  affectedCustomers: number,
-  changeFrequency: number,
-  criticalityImpact: number
+  monthlyRevenueLoss: number
 ) {
-  // Convert averageTicket from cents to BRL
-  const ticketInBRL = averageTicket / 100;
-  
-  // Calculate monthly revenue loss
-  const monthlyRevenueLoss = ticketInBRL * affectedCustomers * changeFrequency * criticalityImpact;
-  
   // Calculate annual revenue loss
   const annualRevenueLoss = monthlyRevenueLoss * 12;
   

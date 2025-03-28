@@ -15,9 +15,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
         <span>Etapa {currentStep} de {totalSteps}</span>
         <span>{Math.round(percentage)}%</span>
       </div>
-      <div className="progress-bar">
+      <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
         <div 
-          className="progress-bar-fill" 
+          className="h-full bg-abaccus-primary transition-all duration-300 ease-in-out" 
           style={{ width: `${percentage}%` }}
         ></div>
       </div>
