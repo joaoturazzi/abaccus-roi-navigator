@@ -33,7 +33,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 187 48% 18%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   body {
@@ -162,4 +162,41 @@
 
 .tooltip.tooltip-right::after {
   @apply -left-1 top-1/2 -translate-y-1/2;
+}
+
+/* Card glass effect */
+.glass-morphism {
+  @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
+}
+
+/* Input focus effects */
+.focus-ring {
+  @apply focus:ring-2 focus:ring-abaccus-primary/30 focus:ring-offset-1 focus:outline-none;
+}
+
+/* Button hover effects */
+.btn-hover-effect {
+  @apply hover:shadow-lg transition-all duration-300 hover:translate-y-[-1px];
+}
+
+/* Results section styling */
+.results-card {
+  @apply p-6 rounded-xl bg-white shadow-card border border-gray-100;
+}
+
+.results-card-highlight {
+  @apply p-6 rounded-xl bg-gradient-to-br from-abaccus-highlight to-white shadow-card border border-gray-100;
+}
+
+.metric-value {
+  @apply text-2xl font-bold text-abaccus-primary;
+}
+
+.metric-label {
+  @apply text-sm text-gray-600;
+}
+
+/* Card group layout */
+.card-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
 }

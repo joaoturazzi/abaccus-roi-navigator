@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowLeft, Download, MessageSquare } from "lucide-react";
+import { ArrowLeft, Download, MessageSquare, TrendingUp, Clock, DollarSign, BarChart } from "lucide-react";
 import { formatCurrency } from '@/lib/utils';
 
 interface ResultsSummaryProps {
@@ -64,8 +64,8 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto animate-fade-in">
-      <Card className="mb-8">
-        <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary text-white rounded-t-lg">
+      <Card className="mb-8 glass-card shadow-card">
+        <CardHeader className="card-header-gradient">
           <CardTitle className="text-xl md:text-2xl">
             Análise de ROI com Abaccus Decision
           </CardTitle>
@@ -77,29 +77,33 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-abaccus-dark mb-4">Custos Operacionais Atuais</h3>
+                <h3 className="text-lg font-medium text-abaccus-dark mb-4 flex items-center">
+                  <Clock className="mr-2 h-5 w-5 text-abaccus-primary" /> Custos Operacionais Atuais
+                </h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Custo mensal:</span>
-                    <span className="font-medium">{formatCurrency(monthlyCost)}</span>
+                    <span className="result-value">{formatCurrency(monthlyCost)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Custo anual:</span>
-                    <span className="font-medium">{formatCurrency(annualCost)}</span>
+                    <span className="result-value">{formatCurrency(annualCost)}</span>
                   </div>
                 </div>
               </div>
               
               <div>
-                <h3 className="text-lg font-medium text-abaccus-dark mb-4">Perda de Receita Estimada</h3>
+                <h3 className="text-lg font-medium text-abaccus-dark mb-4 flex items-center">
+                  <TrendingUp className="mr-2 h-5 w-5 text-abaccus-primary" /> Perda de Receita Estimada
+                </h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Perda mensal:</span>
-                    <span className="font-medium">{formatCurrency(monthlyRevenueLoss)}</span>
+                    <span className="result-value">{formatCurrency(monthlyRevenueLoss)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Perda anual:</span>
-                    <span className="font-medium">{formatCurrency(annualRevenueLoss)}</span>
+                    <span className="result-value">{formatCurrency(annualRevenueLoss)}</span>
                   </div>
                 </div>
               </div>
@@ -107,29 +111,33 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-medium text-abaccus-dark mb-4">Análise Financeira</h3>
+                <h3 className="text-lg font-medium text-abaccus-dark mb-4 flex items-center">
+                  <DollarSign className="mr-2 h-5 w-5 text-abaccus-primary" /> Análise Financeira
+                </h3>
                 <div className="space-y-3">
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Total desperdiçado por ano:</span>
                     <span className="font-medium text-red-600">{formatCurrency(totalAnnualWaste)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Investimento com Abaccus Decision:</span>
                     <span className="font-medium">{formatCurrency(abaccusCost)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600">Economia potencial anual:</span>
                     <span className="font-medium text-green-600">{formatCurrency(potentialSavings)}</span>
                   </div>
-                  <div className="flex justify-between items-center py-2 border-b">
+                  <div className="result-item">
                     <span className="text-gray-600 font-medium">ROI estimado:</span>
                     <span className={`text-xl font-bold ${getROIColorClass(roi)}`}>{roi.toFixed(1)}x</span>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-medium text-abaccus-dark mb-2">Análise de IA</h3>
+              <div className="bg-abaccus-highlight p-5 rounded-lg shadow-inner">
+                <h3 className="text-lg font-medium text-abaccus-dark mb-2 flex items-center">
+                  <BarChart className="mr-2 h-5 w-5 text-abaccus-primary" /> Análise de IA
+                </h3>
                 <p className="text-gray-700 mb-4">
                   Com base nas suas respostas, sua empresa pode estar perdendo até {formatCurrency(totalAnnualWaste)} por ano em ineficiências operacionais.
                 </p>
@@ -143,14 +151,14 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
             </div>
           </div>
           
-          <div className="mt-8 p-6 bg-abaccus-light rounded-lg">
+          <div className="mt-8 p-6 bg-gradient-to-br from-abaccus-highlight to-white rounded-lg shadow-inner border border-abaccus-light">
             <div className="text-center mb-4">
               {getCTAText(roi)}
             </div>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Button 
                 onClick={onContactSpecialist}
-                className="bg-abaccus-primary hover:bg-abaccus-dark text-white"
+                className="button-primary"
                 size="lg"
               >
                 <MessageSquare className="mr-2 h-5 w-5" /> Agende uma Demonstração
@@ -158,7 +166,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
               <Button
                 onClick={onExportPDF}
                 variant="outline"
-                className="border-abaccus-primary text-abaccus-primary hover:bg-abaccus-light"
+                className="button-outline"
                 size="lg"
               >
                 <Download className="mr-2 h-5 w-5" /> Exportar Resultados

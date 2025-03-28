@@ -38,8 +38,8 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                      averageSalary > 0;
 
   return (
-    <Card className="w-full max-w-3xl mx-auto animate-fade-in">
-      <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary text-white rounded-t-lg">
+    <Card className="w-full max-w-3xl mx-auto glass-card animate-fade-in">
+      <CardHeader className="card-header-gradient">
         <CardTitle className="text-xl md:text-2xl">
           Etapa 1: Custo Operacional Atual
         </CardTitle>
@@ -104,7 +104,7 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
             <Button 
               onClick={onNext}
               disabled={!isFormValid}
-              className="bg-abaccus-primary hover:bg-abaccus-dark text-white"
+              className="button-primary"
             >
               Próxima Etapa <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

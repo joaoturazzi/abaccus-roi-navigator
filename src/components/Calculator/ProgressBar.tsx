@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Progress } from "@/components/ui/progress";
 
 interface ProgressBarProps {
   currentStep: number;
@@ -15,12 +16,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
         <span className="font-medium">Etapa {currentStep} de {totalSteps}</span>
         <span className="font-medium">{Math.round(percentage)}%</span>
       </div>
-      <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner">
-        <div 
-          className="h-full progress-bar-fill rounded-full transition-all duration-500 ease-out" 
-          style={{ width: `${percentage}%` }}
-        ></div>
-      </div>
+      <Progress 
+        value={percentage} 
+        className="h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner" 
+      />
     </div>
   );
 };
