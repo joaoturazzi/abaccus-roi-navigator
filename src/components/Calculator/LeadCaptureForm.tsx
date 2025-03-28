@@ -77,9 +77,9 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
   };
 
   return (
-    <Card className="w-full max-w-3xl mx-auto animate-fade-in">
-      <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary text-white rounded-t-lg">
-        <CardTitle className="text-xl md:text-2xl">
+    <Card className="w-full max-w-3xl mx-auto animate-fade-in shadow-card">
+      <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary rounded-t-lg">
+        <CardTitle className="text-xl md:text-2xl text-white">
           Seus Resultados Estão Prontos!
         </CardTitle>
         <CardDescription className="text-gray-100">
@@ -96,7 +96,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={errors.name ? 'border-red-500' : ''}
+                className={`focus-ring ${errors.name ? 'border-red-500' : ''}`}
               />
               {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
             </div>
@@ -109,7 +109,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={errors.email ? 'border-red-500' : ''}
+                className={`focus-ring ${errors.email ? 'border-red-500' : ''}`}
               />
               {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
             </div>
@@ -121,7 +121,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                className={errors.company ? 'border-red-500' : ''}
+                className={`focus-ring ${errors.company ? 'border-red-500' : ''}`}
               />
               {errors.company && <p className="text-red-500 text-xs">{errors.company}</p>}
             </div>
@@ -133,6 +133,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                 name="position"
                 value={formData.position}
                 onChange={handleChange}
+                className="focus-ring"
               />
             </div>
             
@@ -144,6 +145,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="(99) 99999-9999"
+                className="focus-ring"
               />
             </div>
           </div>
@@ -164,7 +166,7 @@ const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
             
             <Button 
               type="submit"
-              className="bg-abaccus-primary hover:bg-abaccus-dark text-white"
+              className="bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white shadow-button hover:shadow-lg transition-all duration-300 hover:translate-y-[-1px]"
             >
               Ver Resultados <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

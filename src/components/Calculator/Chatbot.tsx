@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageSquare, X, Send } from "lucide-react";
+import { MessageSquare, X, Send, User } from "lucide-react";
 import { toast } from "sonner";
 
 interface Message {
@@ -124,7 +124,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="rounded-full h-14 w-14 bg-abaccus-primary hover:bg-abaccus-dark shadow-lg flex items-center justify-center"
+          className="rounded-full h-14 w-14 bg-gradient-to-r from-abaccus-primary to-abaccus-secondary hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center"
         >
           <MessageSquare className="h-6 w-6 text-white" />
         </Button>
@@ -134,7 +134,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
       {isOpen && (
         <div className="bg-white rounded-lg shadow-xl w-80 sm:w-96 max-h-[500px] flex flex-col overflow-hidden border border-gray-200">
           {/* Chat header */}
-          <div className="bg-abaccus-dark p-3 flex items-center justify-between text-white">
+          <div className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary p-3 flex items-center justify-between text-white">
             <div className="flex items-center">
               <MessageSquare className="h-5 w-5 mr-2" />
               <h3 className="font-medium">Assistente Abaccus</h3>
@@ -157,10 +157,15 @@ const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
                   key={message.id}
                   className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
+                  {message.sender === 'bot' && (
+                    <div className="h-8 w-8 rounded-full bg-abaccus-primary flex items-center justify-center text-white mr-2 flex-shrink-0">
+                      <MessageSquare className="h-4 w-4" />
+                    </div>
+                  )}
                   <div
                     className={`max-w-[80%] rounded-lg p-3 ${
                       message.sender === 'user'
-                        ? 'bg-abaccus-primary text-white'
+                        ? 'bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white'
                         : 'bg-white border border-gray-200'
                     }`}
                   >
@@ -169,11 +174,19 @@ const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
+                  {message.sender === 'user' && (
+                    <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 ml-2 flex-shrink-0">
+                      <User className="h-4 w-4" />
+                    </div>
+                  )}
                 </div>
               ))}
               
               {isTyping && (
                 <div className="flex justify-start">
+                  <div className="h-8 w-8 rounded-full bg-abaccus-primary flex items-center justify-center text-white mr-2 flex-shrink-0">
+                    <MessageSquare className="h-4 w-4" />
+                  </div>
                   <div className="bg-white border border-gray-200 rounded-lg p-3 max-w-[80%]">
                     <div className="flex space-x-1">
                       <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
@@ -196,13 +209,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Digite sua mensagem..."
-                className="flex-1 mr-2"
+                className="flex-1 mr-2 focus-ring"
               />
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
                 size="icon"
-                className="h-9 w-9 bg-abaccus-primary hover:bg-abaccus-dark text-white rounded-full flex items-center justify-center"
+                className="h-10 w-10 bg-gradient-to-r from-abaccus-primary to-abaccus-secondary hover:shadow-md text-white rounded-full flex items-center justify-center"
               >
                 <Send className="h-4 w-4" />
               </Button>

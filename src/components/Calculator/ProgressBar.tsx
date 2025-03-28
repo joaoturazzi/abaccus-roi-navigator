@@ -20,6 +20,20 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
         value={percentage} 
         className="h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner" 
       />
+      <div className="flex justify-between mt-1">
+        <div className="flex space-x-1">
+          {Array.from({ length: totalSteps }).map((_, index) => (
+            <div 
+              key={index} 
+              className={`h-1 w-8 rounded-full ${
+                index + 1 <= currentStep 
+                  ? 'bg-abaccus-primary' 
+                  : 'bg-gray-200'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

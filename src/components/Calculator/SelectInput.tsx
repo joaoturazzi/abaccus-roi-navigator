@@ -57,24 +57,24 @@ const SelectInput: React.FC<SelectInputProps> = ({
                 <path d="M12 8h.01"></path>
               </svg>
             </div>
-            <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded w-48 z-10">
+            <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded w-48 z-10">
               {tooltip}
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
+              <div className="absolute top-full right-4 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
             </div>
           </div>
         )}
       </div>
       <Select value={value.toString()} onValueChange={handleChange}>
-        <SelectTrigger id={id} className="w-full">
+        <SelectTrigger id={id} className="w-full bg-white focus-ring">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-white z-50">
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value.toString()}>
-              <div>
-                <div>{option.label}</div>
+            <SelectItem key={option.value.toString()} value={option.value.toString()} className="py-3">
+              <div className="py-1">
+                <div className="font-medium">{option.label}</div>
                 {option.description && (
-                  <div className="text-xs text-gray-500">{option.description}</div>
+                  <div className="text-xs text-gray-500 mt-1">{option.description}</div>
                 )}
               </div>
             </SelectItem>
