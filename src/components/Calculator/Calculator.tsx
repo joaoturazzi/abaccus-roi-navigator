@@ -15,6 +15,7 @@ import {
   generatePDF,
   sendLeadToCRM
 } from '@/lib/utils';
+import { OperationalCostData, RevenueLossData, CalculatorResults } from './types';
 
 const Calculator = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -23,16 +24,16 @@ const Calculator = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   
   // Step 1: Operational Cost data
-  const [operationalCostData, setOperationalCostData] = useState({
+  const [operationalCostData, setOperationalCostData] = useState<OperationalCostData>({
     changesPerMonth: 10,
     peopleInvolved: 3,
     hoursPerChange: 8,
     averageSalary: 800000, // R$ 8,000.00 in cents
-    implementationType: "internal", // Added new field
+    implementationType: "internal",
   });
   
   // Step 2: Revenue Loss data
-  const [revenueLossData, setRevenueLossData] = useState({
+  const [revenueLossData, setRevenueLossData] = useState<RevenueLossData>({
     revenueLossEstimate: 3000000, // R$ 30,000.00 in cents (middle of 10k-50k range)
     changeFrequency: 2, // 2x per month
     delayDays: 5,
@@ -40,7 +41,7 @@ const Calculator = () => {
   });
   
   // Results data
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<CalculatorResults | null>(null);
   
   const totalSteps = 4; // Including lead capture form and results
   
@@ -49,7 +50,7 @@ const Calculator = () => {
     if (isAnimating) {
       const timer = setTimeout(() => {
         setIsAnimating(false);
-      }, 500); // Match this with your animation duration
+      }, 300); // Match this with your animation duration
       return () => clearTimeout(timer);
     }
   }, [isAnimating]);
@@ -71,7 +72,7 @@ const Calculator = () => {
       setTimeout(() => {
         setCurrentStep(prev => prev + 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 300);
+      }, 200);
     }
   };
   
@@ -81,7 +82,7 @@ const Calculator = () => {
       setTimeout(() => {
         setCurrentStep(prev => prev - 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 300);
+      }, 200);
     }
   };
   
@@ -161,8 +162,8 @@ const Calculator = () => {
   // Get the current step component with animation
   const renderCurrentStep = () => {
     const animationClass = isAnimating 
-      ? "opacity-0 transform translate-y-4 transition-all duration-300" 
-      : "opacity-100 transform translate-y-0 transition-all duration-500";
+      ? "opacity-0 transform translate-y-4 transition-all duration-200" 
+      : "opacity-100 transform translate-y-0 transition-all duration-300";
     
     return (
       <div className={animationClass}>
@@ -203,14 +204,14 @@ const Calculator = () => {
   };
   
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-abaccus-highlight/40">
+    <div className="min-h-screen flex flex-col bg-white">
       <Header />
       
-      <main className="flex-1 p-4 md:p-8 relative">
-        {/* Background decoration */}
+      <main className="flex-1 p-4 md:p-6 relative">
+        {/* Simplified background decoration */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-abaccus-light/30 blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-abaccus-light/20 blur-3xl"></div>
+          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-abaccus-light/20 blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-abaccus-light/10 blur-3xl"></div>
         </div>
         
         <div className="relative z-10">

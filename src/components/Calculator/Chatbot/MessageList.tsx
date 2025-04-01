@@ -16,11 +16,11 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, me
   }, [messages, isTyping]);
 
   return (
-    <ScrollArea className="flex-1 p-4 bg-gray-50 max-h-[350px]" ref={scrollAreaRef}>
-      <div className="space-y-4">
+    <ScrollArea className="flex-1 p-3 bg-gray-50 max-h-[320px]" ref={scrollAreaRef}>
+      <div className="space-y-3">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-32 text-center text-gray-500">
-            <MessageSquare className="h-10 w-10 text-abaccus-primary/20 mb-2" />
+          <div className="flex flex-col items-center justify-center h-24 text-center text-gray-500">
+            <MessageSquare className="h-8 w-8 text-abaccus-primary/20 mb-2" />
             <p className="text-sm">Comece a conversar com o assistente</p>
           </div>
         )}
@@ -31,16 +31,17 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, isTyping, me
         
         {isTyping && (
           <div className="flex justify-start">
-            <div className="h-8 w-8 rounded-full bg-abaccus-primary flex items-center justify-center text-white mr-2 flex-shrink-0">
-              <MessageSquare className="h-4 w-4" />
-            </div>
-            <div className="bg-white border border-gray-200 rounded-lg p-3 max-w-[80%]">
+            <Avatar className="h-7 w-7 mr-2 flex-shrink-0">
+              <AvatarImage src="/abaccus-bot-avatar.png" alt="Assistente Abaccus" />
+              <AvatarFallback className="bg-abaccus-primary text-white text-xs">AB</AvatarFallback>
+            </Avatar>
+            <div className="bg-white border border-gray-100 rounded-lg p-2.5 max-w-[85%]">
               <div className="flex space-x-1">
-                <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce"></div>
-                <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                <div className="h-2 w-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                <div className="h-1.5 w-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+                <div className="h-1.5 w-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                <div className="h-1.5 w-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:0.4s]"></div>
               </div>
-              <Skeleton className="h-3 w-12 mt-2" />
+              <Skeleton className="h-2.5 w-12 mt-2" />
             </div>
           </div>
         )}

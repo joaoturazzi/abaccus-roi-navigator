@@ -20,32 +20,32 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
   ];
   
   return (
-    <div className="w-full max-w-3xl mx-auto mb-8 animate-fade-in">
-      <div className="flex justify-between text-sm text-gray-600 mb-2">
+    <div className="w-full max-w-3xl mx-auto mb-6">
+      <div className="flex justify-between text-sm text-gray-600 mb-1">
         <span className="font-medium">Etapa {currentStep} de {totalSteps}</span>
         <span className="font-medium">{Math.round(percentage)}%</span>
       </div>
       <Progress 
         value={percentage} 
-        className="h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner" 
+        className="h-1.5 bg-gray-100" 
       />
       
       {/* Visual step map */}
-      <div className="flex justify-between mt-6 px-2">
+      <div className="flex justify-between mt-4 px-2">
         {Array.from({ length: totalSteps }).map((_, index) => (
           <div key={index} className="flex flex-col items-center transition-all duration-300">
             <div className="relative">
               {index + 1 < currentStep ? (
-                <CheckCircle2 className="h-6 w-6 text-green-500 transition-all duration-300" />
+                <CheckCircle2 className="h-5 w-5 text-green-500 transition-all duration-300" />
               ) : index + 1 === currentStep ? (
-                <div className="h-6 w-6 rounded-full bg-abaccus-primary text-white flex items-center justify-center text-xs font-medium">{index + 1}</div>
+                <div className="h-5 w-5 rounded-full bg-abaccus-primary text-white flex items-center justify-center text-xs font-medium">{index + 1}</div>
               ) : (
-                <Circle className="h-6 w-6 text-gray-300 transition-all duration-300" />
+                <Circle className="h-5 w-5 text-gray-300 transition-all duration-300" />
               )}
               
               {/* Connector line */}
               {index < totalSteps - 1 && (
-                <div className="absolute top-3 left-[calc(100%+0.25rem)] w-[calc(100%-1.5rem)] h-[2px] bg-gray-200">
+                <div className="absolute top-2.5 left-[calc(100%+0.25rem)] w-[calc(100%-1rem)] h-[1px] bg-gray-200">
                   <div 
                     className="h-full bg-abaccus-primary transition-all duration-500"
                     style={{ 
@@ -55,7 +55,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
                 </div>
               )}
             </div>
-            <span className={`text-xs mt-2 text-center max-w-[80px] ${
+            <span className={`text-xs mt-1.5 text-center max-w-[70px] ${
               index + 1 === currentStep 
                 ? 'text-abaccus-primary font-medium' 
                 : index + 1 < currentStep 

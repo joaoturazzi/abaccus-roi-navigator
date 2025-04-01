@@ -1,13 +1,13 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import NumberInput from './NumberInput';
 import MoneyInput from './MoneyInput';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Info, CheckCircle } from "lucide-react";
+import { ArrowRight, Info } from "lucide-react";
 import SelectInput from './SelectInput';
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { OperationalCostData, ImplementationOption } from './types';
 import { 
   Tooltip,
   TooltipContent,
@@ -16,13 +16,7 @@ import {
 } from "@/components/ui/tooltip";
 
 interface OperationalCostStepProps {
-  formData: {
-    changesPerMonth: number;
-    peopleInvolved: number;
-    hoursPerChange: number;
-    averageSalary: number;
-    implementationType: string;
-  };
+  formData: OperationalCostData;
   onChange: (key: string, value: number | string) => void;
   onNext: () => void;
 }
@@ -34,7 +28,7 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
 }) => {
   const { changesPerMonth, peopleInvolved, hoursPerChange, averageSalary, implementationType } = formData;
   
-  const implementationOptions = [
+  const implementationOptions: ImplementationOption[] = [
     { value: "internal", label: "Time interno", description: "Nossa própria equipe faz as alterações" },
     { value: "consulting", label: "Consultoria", description: "Contratamos consultoria para fazer as alterações" },
     { value: "both", label: "Ambos", description: "Tanto nossa equipe quanto consultoria externa" }
@@ -56,30 +50,18 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
     hoursPerChange: 12,
   };
 
-  // Create a function to determine color gradient based on value intensity
-  const getIntensityColor = (value: number, max: number) => {
-    const intensity = value / max;
-    if (intensity < 0.3) return "bg-green-500";
-    if (intensity < 0.7) return "bg-yellow-500";
-    return "bg-red-500";
-  };
-
   return (
-    <Card className="w-full max-w-3xl mx-auto glass-card animate-fade-in shadow-xl hover:shadow-2xl transition-all duration-300">
-      <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary rounded-t-lg relative overflow-hidden">
-        {/* Subtle background pattern */}
-        <div className="absolute inset-0 opacity-10" 
-             style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0id2hpdGUiPjwvcmVjdD4KPHBhdGggZD0iTTAgMzBDMCAxMy40MzE1IDEzLjQzMTUgMCAzMCAwYzE2LjU2ODUgMCAzMCAxMy40MzE1IDMwIDMwQzYwIDQ2LjU2ODUgNDYuNTY4NSA2MCAzMCA2MCAzMCA2MCAwIDQ2LjU2ODUgMCAzMHoiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMDUiPjwvcGF0aD4KPC9zdmc+')"}}>
-        </div>
-        <CardTitle className="text-xl md:text-2xl text-white relative z-10">
+    <Card className="w-full max-w-3xl mx-auto shadow-sm border-gray-200">
+      <CardHeader className="bg-abaccus-primary text-white pb-4">
+        <CardTitle className="text-xl font-medium">
           Etapa 1: Custo Operacional Atual
         </CardTitle>
       </CardHeader>
-      <CardContent className="pt-6 pb-8 px-6">
-        <div className="space-y-6">
-          <div className="space-y-4">
+      <CardContent className="p-6">
+        <div className="space-y-5">
+          <div className="space-y-3">
             <div className="flex items-start justify-between mb-1">
-              <Label htmlFor="changesPerMonth" className="text-sm font-medium">
+              <Label htmlFor="changesPerMonth" className="text-sm font-medium text-gray-700">
                 Quantas alterações de regras de negócio sua equipe faz por mês?
               </Label>
               <TooltipProvider>
@@ -89,23 +71,22 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                       <Info size={16} />
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
-                    <p>Considere todas as alterações em regras de negócio, fluxos de aprovação, condições de validação, etc.</p>
-                    <p className="mt-2 pt-2 border-t border-gray-700 text-gray-300 text-xs">
-                      <span className="font-semibold text-white">Média do setor:</span> {industryAverages.changesPerMonth} alterações por mês
+                  <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
+                    <p className="text-xs">Considere todas as alterações em regras de negócio, fluxos de aprovação, condições de validação, etc.</p>
+                    <p className="mt-1 pt-1 border-t border-gray-700 text-xs text-gray-300">
+                      Média do setor: {industryAverages.changesPerMonth} alterações por mês
                     </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Slider
                 id="changesPerMonth"
                 value={[changesPerMonth]}
                 max={50}
                 step={1}
                 onValueChange={(value) => handleSliderChange('changesPerMonth', value)}
-                className="py-2"
               />
               <div className="flex justify-between items-center">
                 <span className="text-xs text-gray-500">Poucas (1)</span>
@@ -114,33 +95,24 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                     type="number"
                     value={changesPerMonth}
                     onChange={(e) => onChange('changesPerMonth', Number(e.target.value))}
-                    className={`border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring ${
-                      changesPerMonth > 0 ? 'border-green-500' : 'border-red-300'
-                    }`}
+                    className="border border-gray-200 rounded w-16 px-2 py-1 text-center text-sm"
                     min={1}
                     max={50}
                   />
-                  {changesPerMonth > 0 && <CheckCircle size={16} className="text-green-500" />}
                 </div>
                 <span className="text-xs text-gray-500">Muitas (50)</span>
               </div>
               
               {/* Industry average marker */}
-              <div className="relative h-1 w-full mt-1">
+              <div className="relative h-1 w-full mt-0.5">
                 <div 
-                  className="absolute h-4 w-1 bg-gray-400 rounded-full"
-                  style={{ left: `${(industryAverages.changesPerMonth / 50) * 100}%`, top: '-6px' }}
+                  className="absolute h-3 w-0.5 bg-gray-400 rounded-full"
+                  style={{ left: `${(industryAverages.changesPerMonth / 50) * 100}%`, top: '-4px' }}
                 >
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs whitespace-nowrap">
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap">
                     Média: {industryAverages.changesPerMonth}
                   </div>
                 </div>
-                
-                {/* Color indicator based on value */}
-                <div 
-                  className={`absolute h-1 rounded-full transition-all duration-300 ${getIntensityColor(changesPerMonth, 50)}`}
-                  style={{ width: `${(changesPerMonth / 50) * 100}%` }}
-                ></div>
               </div>
             </div>
           </div>
@@ -155,9 +127,9 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
           />
           
           {implementationType !== "consulting" && (
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div className="flex items-start justify-between mb-1">
-                <Label htmlFor="peopleInvolved" className="text-sm font-medium">
+                <Label htmlFor="peopleInvolved" className="text-sm font-medium text-gray-700">
                   Quantas pessoas estão envolvidas em cada alteração?
                 </Label>
                 <TooltipProvider>
@@ -167,23 +139,22 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                         <Info size={16} />
                       </div>
                     </TooltipTrigger>
-                    <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
-                      <p>Considere analistas, desenvolvedores, testadores e gestores envolvidos.</p>
-                      <p className="mt-2 pt-2 border-t border-gray-700 text-gray-300 text-xs">
-                        <span className="font-semibold text-white">Média do setor:</span> {industryAverages.peopleInvolved} pessoas
+                    <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
+                      <p className="text-xs">Considere analistas, desenvolvedores, testadores e gestores envolvidos.</p>
+                      <p className="mt-1 pt-1 border-t border-gray-700 text-xs text-gray-300">
+                        Média do setor: {industryAverages.peopleInvolved} pessoas
                       </p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 <Slider
                   id="peopleInvolved"
                   value={[peopleInvolved]}
                   max={10}
                   step={1}
                   onValueChange={(value) => handleSliderChange('peopleInvolved', value)}
-                  className="py-2"
                 />
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-gray-500">Poucas (1)</span>
@@ -192,41 +163,32 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                       type="number"
                       value={peopleInvolved}
                       onChange={(e) => onChange('peopleInvolved', Number(e.target.value))}
-                      className={`border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring ${
-                        peopleInvolved > 0 ? 'border-green-500' : 'border-red-300'
-                      }`}
+                      className="border border-gray-200 rounded w-16 px-2 py-1 text-center text-sm"
                       min={1}
                       max={10}
                     />
-                    {peopleInvolved > 0 && <CheckCircle size={16} className="text-green-500" />}
                   </div>
                   <span className="text-xs text-gray-500">Muitas (10)</span>
                 </div>
                 
                 {/* Industry average marker */}
-                <div className="relative h-1 w-full mt-1">
+                <div className="relative h-1 w-full mt-0.5">
                   <div 
-                    className="absolute h-4 w-1 bg-gray-400 rounded-full"
-                    style={{ left: `${(industryAverages.peopleInvolved / 10) * 100}%`, top: '-6px' }}
+                    className="absolute h-3 w-0.5 bg-gray-400 rounded-full"
+                    style={{ left: `${(industryAverages.peopleInvolved / 10) * 100}%`, top: '-4px' }}
                   >
-                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs whitespace-nowrap">
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap">
                       Média: {industryAverages.peopleInvolved}
                     </div>
                   </div>
-                  
-                  {/* Color indicator based on value */}
-                  <div 
-                    className={`absolute h-1 rounded-full transition-all duration-300 ${getIntensityColor(peopleInvolved, 10)}`}
-                    style={{ width: `${(peopleInvolved / 10) * 100}%` }}
-                  ></div>
                 </div>
               </div>
             </div>
           )}
           
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div className="flex items-start justify-between mb-1">
-              <Label htmlFor="hoursPerChange" className="text-sm font-medium">
+              <Label htmlFor="hoursPerChange" className="text-sm font-medium text-gray-700">
                 Tempo médio em horas de todos os envolvidos na implementação de cada alteração?
               </Label>
               <TooltipProvider>
@@ -236,23 +198,22 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                       <Info size={16} />
                     </div>
                   </TooltipTrigger>
-                  <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
-                    <p>Inclua o tempo total de análise, desenvolvimento, testes e implantação de todos os envolvidos.</p>
-                    <p className="mt-2 pt-2 border-t border-gray-700 text-gray-300 text-xs">
-                      <span className="font-semibold text-white">Média do setor:</span> {industryAverages.hoursPerChange} horas
+                  <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
+                    <p className="text-xs">Inclua o tempo total de análise, desenvolvimento, testes e implantação de todos os envolvidos.</p>
+                    <p className="mt-1 pt-1 border-t border-gray-700 text-xs text-gray-300">
+                      Média do setor: {industryAverages.hoursPerChange} horas
                     </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
-            <div className="space-y-3">
+            <div className="space-y-2">
               <Slider
                 id="hoursPerChange"
                 value={[hoursPerChange]}
                 max={40}
                 step={1}
                 onValueChange={(value) => handleSliderChange('hoursPerChange', value)}
-                className="py-2"
               />
               <div className="flex justify-between items-center">
                 <span className="text-xs text-gray-500">Pouco (1h)</span>
@@ -261,34 +222,25 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                     type="number"
                     value={hoursPerChange}
                     onChange={(e) => onChange('hoursPerChange', Number(e.target.value))}
-                    className={`border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring ${
-                      hoursPerChange > 0 ? 'border-green-500' : 'border-red-300'
-                    }`}
+                    className="border border-gray-200 rounded w-16 px-2 py-1 text-center text-sm"
                     min={1}
                     max={40}
                   />
-                  <span className="ml-1 text-sm text-gray-600">horas</span>
-                  {hoursPerChange > 0 && <CheckCircle size={16} className="text-green-500" />}
+                  <span className="ml-1 text-xs text-gray-600">horas</span>
                 </div>
                 <span className="text-xs text-gray-500">Muito (40h)</span>
               </div>
               
               {/* Industry average marker */}
-              <div className="relative h-1 w-full mt-1">
+              <div className="relative h-1 w-full mt-0.5">
                 <div 
-                  className="absolute h-4 w-1 bg-gray-400 rounded-full"
-                  style={{ left: `${(industryAverages.hoursPerChange / 40) * 100}%`, top: '-6px' }}
+                  className="absolute h-3 w-0.5 bg-gray-400 rounded-full"
+                  style={{ left: `${(industryAverages.hoursPerChange / 40) * 100}%`, top: '-4px' }}
                 >
-                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs whitespace-nowrap">
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[10px] whitespace-nowrap">
                     Média: {industryAverages.hoursPerChange}h
                   </div>
                 </div>
-                
-                {/* Color indicator based on value */}
-                <div 
-                  className={`absolute h-1 rounded-full transition-all duration-300 ${getIntensityColor(hoursPerChange, 40)}`}
-                  style={{ width: `${(hoursPerChange / 40) * 100}%` }}
-                ></div>
               </div>
             </div>
           </div>
@@ -311,11 +263,11 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
             />
           )}
 
-          <div className="mt-8 flex justify-end">
+          <div className="mt-6 flex justify-end">
             <Button 
               onClick={onNext}
               disabled={!isFormValid}
-              className="bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white shadow-button hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] px-6 py-2.5 rounded-lg"
+              className="bg-abaccus-primary hover:bg-abaccus-primary/90 transition-all px-5"
             >
               Próxima Etapa <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

@@ -33,170 +33,56 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 187 48% 18%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   body {
-    @apply bg-abaccus-background text-abaccus-text;
+    @apply bg-white text-gray-800 antialiased;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-medium text-abaccus-dark;
-  }
-
-  .progress-bar {
-    @apply h-2.5 bg-gray-100 rounded-full overflow-hidden shadow-inner;
-  }
-
-  .progress-bar-fill {
-    @apply h-full bg-gradient-to-r from-abaccus-primary to-abaccus-accent transition-all duration-500 ease-in-out;
+    @apply font-medium text-gray-900;
   }
 }
 
-/* Custom animation classes */
-@layer components {
-  .glass-card {
-    @apply bg-white shadow-card border border-gray-100 backdrop-blur-sm transition-all duration-300;
+/* Animation utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards;
   }
   
-  .glass-card:hover {
-    @apply shadow-card-hover border-gray-200;
+  .animate-pulse-light {
+    animation: pulse 4s infinite;
   }
-
-  .input-elegant {
-    @apply transition-all duration-200 border border-gray-200 focus:border-abaccus-primary focus:ring focus:ring-abaccus-light focus:ring-opacity-50;
-  }
-
-  .button-primary {
-    @apply bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white shadow-button hover:shadow-lg transition-all duration-300 hover:translate-y-[-1px];
-  }
-
-  .button-outline {
-    @apply border border-abaccus-primary text-abaccus-primary bg-white hover:bg-abaccus-light transition-all duration-300;
-  }
-
-  .card-animated {
-    @apply opacity-0 transform translate-y-4;
-    animation: card-enter 0.5s forwards;
-  }
-
-  .staggered-item {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  .staggered-item-visible {
-    animation: staggered-enter 0.5s forwards;
-  }
-
-  @keyframes card-enter {
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
     }
-  }
-
-  @keyframes staggered-enter {
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
   
-  /* Elegant form styling */
-  .form-elegant .form-group {
-    @apply mb-6;
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.8;
+    }
   }
-  
-  .form-elegant label {
-    @apply block mb-2 text-sm font-medium text-abaccus-dark;
-  }
-  
-  .form-elegant input, 
-  .form-elegant select {
-    @apply input-elegant rounded-md shadow-input;
-  }
-  
-  /* Card design improvements */
-  .card-header-gradient {
-    @apply bg-gradient-to-r from-abaccus-dark to-abaccus-primary text-white rounded-t-lg;
-  }
-  
-  /* Results styling */
-  .result-item {
-    @apply py-3 border-b border-gray-100 flex justify-between items-center;
-  }
-  
-  .result-value {
-    @apply font-semibold text-abaccus-primary;
-  }
-  
-  .result-highlight {
-    @apply text-lg font-bold text-abaccus-primary;
-  }
-}
-
-/* Tooltip improvements */
-.tooltip {
-  @apply absolute z-20 bg-gray-800 text-white text-xs py-1.5 px-2.5 rounded max-w-xs;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.tooltip::after {
-  content: '';
-  @apply absolute w-2 h-2 bg-gray-800 rotate-45;
-}
-
-.tooltip.tooltip-top::after {
-  @apply -bottom-1 left-1/2 -translate-x-1/2;
-}
-
-.tooltip.tooltip-bottom::after {
-  @apply -top-1 left-1/2 -translate-x-1/2;
-}
-
-.tooltip.tooltip-left::after {
-  @apply -right-1 top-1/2 -translate-y-1/2;
-}
-
-.tooltip.tooltip-right::after {
-  @apply -left-1 top-1/2 -translate-y-1/2;
-}
-
-/* Card glass effect */
-.glass-morphism {
-  @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-lg;
 }
 
 /* Input focus effects */
 .focus-ring {
-  @apply focus:ring-2 focus:ring-abaccus-primary/30 focus:ring-offset-1 focus:outline-none;
+  @apply focus:ring-2 focus:ring-abaccus-primary/20 focus:outline-none;
 }
 
-/* Button hover effects */
-.btn-hover-effect {
-  @apply hover:shadow-lg transition-all duration-300 hover:translate-y-[-1px];
-}
-
-/* Results section styling */
-.results-card {
-  @apply p-6 rounded-xl bg-white shadow-card border border-gray-100;
-}
-
-.results-card-highlight {
-  @apply p-6 rounded-xl bg-gradient-to-br from-abaccus-highlight to-white shadow-card border border-gray-100;
-}
-
-.metric-value {
-  @apply text-2xl font-bold text-abaccus-primary;
-}
-
-.metric-label {
-  @apply text-sm text-gray-600;
-}
-
-/* Card group layout */
-.card-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+/* Toast styling improvements */
+.sonner-toast {
+  @apply shadow-md border border-gray-200;
 }

@@ -8,6 +8,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface Option {
   value: string | number;
@@ -44,37 +51,36 @@ const SelectInput: React.FC<SelectInputProps> = ({
 
   return (
     <div className="mb-4">
-      <div className="flex items-center justify-between mb-1">
-        <Label htmlFor={id} className="text-sm font-medium">
+      <div className="flex items-center justify-between mb-1.5">
+        <Label htmlFor={id} className="text-sm font-medium text-gray-700">
           {label}
         </Label>
         {tooltip && (
-          <div className="group relative">
-            <div className="cursor-help text-gray-400 hover:text-gray-600">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 16v-4"></path>
-                <path d="M12 8h.01"></path>
-              </svg>
-            </div>
-            <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded w-48 z-10">
-              {tooltip}
-              <div className="absolute top-full right-4 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
-            </div>
-          </div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="cursor-help text-gray-400 hover:text-gray-600">
+                  <Info size={16} />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg border-none shadow-lg">
+                <p className="text-xs">{tooltip}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
       <Select value={value.toString()} onValueChange={handleChange}>
-        <SelectTrigger id={id} className="w-full bg-white focus-ring">
+        <SelectTrigger id={id} className="w-full bg-white border-gray-200 focus-visible:ring-abaccus-primary/20">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-white z-50">
+        <SelectContent className="bg-white">
           {options.map((option) => (
-            <SelectItem key={option.value.toString()} value={option.value.toString()} className="py-3">
-              <div className="py-1">
+            <SelectItem key={option.value.toString()} value={option.value.toString()} className="py-2">
+              <div>
                 <div className="font-medium">{option.label}</div>
                 {option.description && (
-                  <div className="text-xs text-gray-500 mt-1">{option.description}</div>
+                  <div className="text-xs text-gray-500 mt-0.5">{option.description}</div>
                 )}
               </div>
             </SelectItem>

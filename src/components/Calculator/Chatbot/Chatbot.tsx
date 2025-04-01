@@ -8,6 +8,7 @@ import { ChatInput } from './ChatInput';
 import { useChatbot } from './useChatbot';
 import { ChatbotProps } from './types';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
   const isMobile = useIsMobile();
@@ -31,16 +32,16 @@ export const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="rounded-full h-14 w-14 bg-gradient-to-r from-abaccus-primary to-abaccus-secondary hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center"
+          className="rounded-full h-12 w-12 bg-abaccus-primary hover:bg-abaccus-primary/90 transition-all shadow-md flex items-center justify-center"
           aria-label="Abrir assistente virtual"
         >
-          <MessageSquare className="h-6 w-6 text-white" />
+          <MessageSquare className="h-5 w-5 text-white" />
         </Button>
       )}
       
       {/* Chat window */}
       {isOpen && (
-        <div className="bg-white rounded-lg shadow-xl w-80 sm:w-96 max-h-[500px] flex flex-col overflow-hidden border border-gray-200 animate-fade-in">
+        <div className="bg-white rounded-lg shadow-md w-80 max-h-[450px] flex flex-col overflow-hidden border border-gray-100 animate-fade-in">
           <ChatHeader onClose={() => setIsOpen(false)} />
           <MessageList 
             messages={messages} 
