@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from "sonner";
 import Header from './Header';
 import ProgressBar from './ProgressBar';
@@ -20,6 +20,7 @@ const Calculator = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isResultsReady, setIsResultsReady] = useState(false);
   const [leadData, setLeadData] = useState<LeadData | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   // Step 1: Operational Cost data
   const [operationalCostData, setOperationalCostData] = useState({
@@ -43,6 +44,16 @@ const Calculator = () => {
   
   const totalSteps = 4; // Including lead capture form and results
   
+  // Handle animation when changing steps
+  useEffect(() => {
+    if (isAnimating) {
+      const timer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 500); // Match this with your animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [isAnimating]);
+  
   // Handle changes to operational cost data
   const handleOperationalCostChange = (key: string, value: number | string) => {
     setOperationalCostData(prev => ({ ...prev, [key]: value }));
@@ -56,15 +67,21 @@ const Calculator = () => {
   // Handle form navigation
   const handleNext = () => {
     if (currentStep < totalSteps) {
-      setCurrentStep(prev => prev + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentStep(prev => prev + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 300);
     }
   };
   
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(prev => prev - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentStep(prev => prev - 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 300);
     }
   };
   
@@ -141,13 +158,14 @@ const Calculator = () => {
     toast.success("Redirecionando para contato com especialista...");
   };
   
-  return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <Header />
-      
-      <main className="flex-1 p-4 md:p-8">
-        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
-        
+  // Get the current step component with animation
+  const renderCurrentStep = () => {
+    const animationClass = isAnimating 
+      ? "opacity-0 transform translate-y-4 transition-all duration-300" 
+      : "opacity-100 transform translate-y-0 transition-all duration-500";
+    
+    return (
+      <div className={animationClass}>
         {currentStep === 1 && (
           <OperationalCostStep 
             formData={operationalCostData}
@@ -180,6 +198,26 @@ const Calculator = () => {
             onContactSpecialist={handleContactSpecialist}
           />
         )}
+      </div>
+    );
+  };
+  
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-abaccus-highlight/40">
+      <Header />
+      
+      <main className="flex-1 p-4 md:p-8 relative">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-abaccus-light/30 blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-abaccus-light/20 blur-3xl"></div>
+        </div>
+        
+        <div className="relative z-10">
+          <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
+          
+          {renderCurrentStep()}
+        </div>
       </main>
       
       <Chatbot 

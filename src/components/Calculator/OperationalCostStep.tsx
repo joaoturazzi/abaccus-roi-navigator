@@ -4,10 +4,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import NumberInput from './NumberInput';
 import MoneyInput from './MoneyInput';
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Info, CheckCircle } from "lucide-react";
 import SelectInput from './SelectInput';
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface OperationalCostStepProps {
   formData: {
@@ -43,10 +49,29 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
     onChange(key, value[0]);
   };
 
+  // Industry averages for contextual reference
+  const industryAverages = {
+    changesPerMonth: 15,
+    peopleInvolved: 4,
+    hoursPerChange: 12,
+  };
+
+  // Create a function to determine color gradient based on value intensity
+  const getIntensityColor = (value: number, max: number) => {
+    const intensity = value / max;
+    if (intensity < 0.3) return "bg-green-500";
+    if (intensity < 0.7) return "bg-yellow-500";
+    return "bg-red-500";
+  };
+
   return (
-    <Card className="w-full max-w-3xl mx-auto glass-card animate-fade-in shadow-card">
-      <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary rounded-t-lg">
-        <CardTitle className="text-xl md:text-2xl text-white">
+    <Card className="w-full max-w-3xl mx-auto glass-card animate-fade-in shadow-xl hover:shadow-2xl transition-all duration-300">
+      <CardHeader className="bg-gradient-to-r from-abaccus-dark to-abaccus-primary rounded-t-lg relative overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-10" 
+             style={{ backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0id2hpdGUiPjwvcmVjdD4KPHBhdGggZD0iTTAgMzBDMCAxMy40MzE1IDEzLjQzMTUgMCAzMCAwYzE2LjU2ODUgMCAzMCAxMy40MzE1IDMwIDMwQzYwIDQ2LjU2ODUgNDYuNTY4NSA2MCAzMCA2MCAzMCA2MCAwIDQ2LjU2ODUgMCAzMHoiIGZpbGw9IiMwMDAiIG9wYWNpdHk9IjAuMDUiPjwvcGF0aD4KPC9zdmc+')"}}>
+        </div>
+        <CardTitle className="text-xl md:text-2xl text-white relative z-10">
           Etapa 1: Custo Operacional Atual
         </CardTitle>
       </CardHeader>
@@ -57,19 +82,21 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
               <Label htmlFor="changesPerMonth" className="text-sm font-medium">
                 Quantas alterações de regras de negócio sua equipe faz por mês?
               </Label>
-              <div className="group relative">
-                <div className="cursor-help text-gray-400 hover:text-gray-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                  </svg>
-                </div>
-                <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded w-48 z-10">
-                  Considere todas as alterações em regras de negócio, fluxos de aprovação, condições de validação, etc.
-                  <div className="absolute top-full right-4 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
-                </div>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="cursor-help text-gray-400 hover:text-gray-600">
+                      <Info size={16} />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
+                    <p>Considere todas as alterações em regras de negócio, fluxos de aprovação, condições de validação, etc.</p>
+                    <p className="mt-2 pt-2 border-t border-gray-700 text-gray-300 text-xs">
+                      <span className="font-semibold text-white">Média do setor:</span> {industryAverages.changesPerMonth} alterações por mês
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="space-y-3">
               <Slider
@@ -80,17 +107,40 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                 onValueChange={(value) => handleSliderChange('changesPerMonth', value)}
                 className="py-2"
               />
-              <div className="flex justify-between">
-                <span className="text-xs text-gray-500">1</span>
-                <input
-                  type="number"
-                  value={changesPerMonth}
-                  onChange={(e) => onChange('changesPerMonth', Number(e.target.value))}
-                  className="border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring"
-                  min={1}
-                  max={50}
-                />
-                <span className="text-xs text-gray-500">50</span>
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-500">Poucas (1)</span>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={changesPerMonth}
+                    onChange={(e) => onChange('changesPerMonth', Number(e.target.value))}
+                    className={`border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring ${
+                      changesPerMonth > 0 ? 'border-green-500' : 'border-red-300'
+                    }`}
+                    min={1}
+                    max={50}
+                  />
+                  {changesPerMonth > 0 && <CheckCircle size={16} className="text-green-500" />}
+                </div>
+                <span className="text-xs text-gray-500">Muitas (50)</span>
+              </div>
+              
+              {/* Industry average marker */}
+              <div className="relative h-1 w-full mt-1">
+                <div 
+                  className="absolute h-4 w-1 bg-gray-400 rounded-full"
+                  style={{ left: `${(industryAverages.changesPerMonth / 50) * 100}%`, top: '-6px' }}
+                >
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs whitespace-nowrap">
+                    Média: {industryAverages.changesPerMonth}
+                  </div>
+                </div>
+                
+                {/* Color indicator based on value */}
+                <div 
+                  className={`absolute h-1 rounded-full transition-all duration-300 ${getIntensityColor(changesPerMonth, 50)}`}
+                  style={{ width: `${(changesPerMonth / 50) * 100}%` }}
+                ></div>
               </div>
             </div>
           </div>
@@ -110,19 +160,21 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                 <Label htmlFor="peopleInvolved" className="text-sm font-medium">
                   Quantas pessoas estão envolvidas em cada alteração?
                 </Label>
-                <div className="group relative">
-                  <div className="cursor-help text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="M12 16v-4"></path>
-                      <path d="M12 8h.01"></path>
-                    </svg>
-                  </div>
-                  <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded w-48 z-10">
-                    Considere analistas, desenvolvedores, testadores e gestores envolvidos.
-                    <div className="absolute top-full right-4 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
-                  </div>
-                </div>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="cursor-help text-gray-400 hover:text-gray-600">
+                        <Info size={16} />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
+                      <p>Considere analistas, desenvolvedores, testadores e gestores envolvidos.</p>
+                      <p className="mt-2 pt-2 border-t border-gray-700 text-gray-300 text-xs">
+                        <span className="font-semibold text-white">Média do setor:</span> {industryAverages.peopleInvolved} pessoas
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
               <div className="space-y-3">
                 <Slider
@@ -133,17 +185,40 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                   onValueChange={(value) => handleSliderChange('peopleInvolved', value)}
                   className="py-2"
                 />
-                <div className="flex justify-between">
-                  <span className="text-xs text-gray-500">1</span>
-                  <input
-                    type="number"
-                    value={peopleInvolved}
-                    onChange={(e) => onChange('peopleInvolved', Number(e.target.value))}
-                    className="border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring"
-                    min={1}
-                    max={10}
-                  />
-                  <span className="text-xs text-gray-500">10</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-gray-500">Poucas (1)</span>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      value={peopleInvolved}
+                      onChange={(e) => onChange('peopleInvolved', Number(e.target.value))}
+                      className={`border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring ${
+                        peopleInvolved > 0 ? 'border-green-500' : 'border-red-300'
+                      }`}
+                      min={1}
+                      max={10}
+                    />
+                    {peopleInvolved > 0 && <CheckCircle size={16} className="text-green-500" />}
+                  </div>
+                  <span className="text-xs text-gray-500">Muitas (10)</span>
+                </div>
+                
+                {/* Industry average marker */}
+                <div className="relative h-1 w-full mt-1">
+                  <div 
+                    className="absolute h-4 w-1 bg-gray-400 rounded-full"
+                    style={{ left: `${(industryAverages.peopleInvolved / 10) * 100}%`, top: '-6px' }}
+                  >
+                    <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs whitespace-nowrap">
+                      Média: {industryAverages.peopleInvolved}
+                    </div>
+                  </div>
+                  
+                  {/* Color indicator based on value */}
+                  <div 
+                    className={`absolute h-1 rounded-full transition-all duration-300 ${getIntensityColor(peopleInvolved, 10)}`}
+                    style={{ width: `${(peopleInvolved / 10) * 100}%` }}
+                  ></div>
                 </div>
               </div>
             </div>
@@ -154,19 +229,21 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
               <Label htmlFor="hoursPerChange" className="text-sm font-medium">
                 Tempo médio em horas de todos os envolvidos na implementação de cada alteração?
               </Label>
-              <div className="group relative">
-                <div className="cursor-help text-gray-400 hover:text-gray-600">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M12 16v-4"></path>
-                    <path d="M12 8h.01"></path>
-                  </svg>
-                </div>
-                <div className="absolute bottom-full mb-2 right-0 hidden group-hover:block bg-gray-800 text-white text-xs p-2 rounded w-48 z-10">
-                  Inclua o tempo total de análise, desenvolvimento, testes e implantação de todos os envolvidos.
-                  <div className="absolute top-full right-4 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
-                </div>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="cursor-help text-gray-400 hover:text-gray-600">
+                      <Info size={16} />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
+                    <p>Inclua o tempo total de análise, desenvolvimento, testes e implantação de todos os envolvidos.</p>
+                    <p className="mt-2 pt-2 border-t border-gray-700 text-gray-300 text-xs">
+                      <span className="font-semibold text-white">Média do setor:</span> {industryAverages.hoursPerChange} horas
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="space-y-3">
               <Slider
@@ -177,20 +254,41 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
                 onValueChange={(value) => handleSliderChange('hoursPerChange', value)}
                 className="py-2"
               />
-              <div className="flex justify-between">
-                <span className="text-xs text-gray-500">1</span>
-                <div className="flex items-center">
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-gray-500">Pouco (1h)</span>
+                <div className="flex items-center gap-2">
                   <input
                     type="number"
                     value={hoursPerChange}
                     onChange={(e) => onChange('hoursPerChange', Number(e.target.value))}
-                    className="border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring"
+                    className={`border border-gray-200 rounded w-20 px-2 py-1 text-center text-sm focus-ring ${
+                      hoursPerChange > 0 ? 'border-green-500' : 'border-red-300'
+                    }`}
                     min={1}
                     max={40}
                   />
-                  <span className="ml-2 text-sm text-gray-600">horas</span>
+                  <span className="ml-1 text-sm text-gray-600">horas</span>
+                  {hoursPerChange > 0 && <CheckCircle size={16} className="text-green-500" />}
                 </div>
-                <span className="text-xs text-gray-500">40</span>
+                <span className="text-xs text-gray-500">Muito (40h)</span>
+              </div>
+              
+              {/* Industry average marker */}
+              <div className="relative h-1 w-full mt-1">
+                <div 
+                  className="absolute h-4 w-1 bg-gray-400 rounded-full"
+                  style={{ left: `${(industryAverages.hoursPerChange / 40) * 100}%`, top: '-6px' }}
+                >
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs whitespace-nowrap">
+                    Média: {industryAverages.hoursPerChange}h
+                  </div>
+                </div>
+                
+                {/* Color indicator based on value */}
+                <div 
+                  className={`absolute h-1 rounded-full transition-all duration-300 ${getIntensityColor(hoursPerChange, 40)}`}
+                  style={{ width: `${(hoursPerChange / 40) * 100}%` }}
+                ></div>
               </div>
             </div>
           </div>
@@ -213,11 +311,11 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
             />
           )}
 
-          <div className="mt-6 flex justify-end">
+          <div className="mt-8 flex justify-end">
             <Button 
               onClick={onNext}
               disabled={!isFormValid}
-              className="bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white shadow-button hover:shadow-lg transition-all duration-300 hover:translate-y-[-1px]"
+              className="bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white shadow-button hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] px-6 py-2.5 rounded-lg"
             >
               Próxima Etapa <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
