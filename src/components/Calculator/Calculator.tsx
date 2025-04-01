@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { toast } from "sonner";
 import Header from './Header';
@@ -6,7 +7,7 @@ import OperationalCostStep from './OperationalCostStep';
 import RevenueLossStep from './RevenueLossStep';
 import LeadCaptureForm, { LeadData } from './LeadCaptureForm';
 import ResultsSummary from './ResultsSummary';
-import Chatbot from './Chatbot/Chatbot';
+import { Chatbot } from './Chatbot/Chatbot';
 import { 
   calculateOperationalCosts, 
   calculateRevenueLosses, 
