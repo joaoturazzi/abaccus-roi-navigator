@@ -8,7 +8,7 @@ interface SectionHeaderProps {
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
   return (
-    <CardHeader className="bg-abaccus-primary text-white pb-4">
+    <CardHeader className="bg-gradient-to-r from-abaccus-primary to-abaccus-secondary text-white pb-4">
       <CardTitle className="text-xl font-medium">
         {title}
       </CardTitle>

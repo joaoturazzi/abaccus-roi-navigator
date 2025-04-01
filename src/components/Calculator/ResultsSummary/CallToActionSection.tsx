@@ -32,25 +32,25 @@ const CallToActionSection: React.FC<CallToActionSectionProps> = ({
   };
 
   return (
-    <div className="mt-6 p-5 bg-abaccus-light/20 rounded-md border border-abaccus-light/30">
-      <div className="text-center mb-4">
+    <div className="mt-8 p-6 bg-gradient-to-br from-abaccus-light/70 to-white rounded-lg border border-abaccus-light/30 shadow-sm">
+      <div className="text-center mb-5">
         {getCTAText(roi)}
       </div>
-      <div className="flex flex-col sm:flex-row justify-center gap-3">
+      <div className="flex flex-col sm:flex-row justify-center gap-4">
         <Button 
           onClick={onContactSpecialist}
-          className="bg-abaccus-primary hover:bg-abaccus-primary/90"
+          className="bg-gradient-to-r from-abaccus-primary to-abaccus-secondary hover:bg-abaccus-primary/90 shadow-sm hover:shadow-md transition-all duration-200 hover:translate-y-[-1px]"
           size="lg"
         >
-          <MessageSquare className="mr-2 h-4 w-4" /> Agende uma Demonstração
+          <MessageSquare className="mr-2 h-5 w-5" /> Agende uma Demonstração
         </Button>
         <Button
           onClick={onExportPDF}
           variant="outline"
-          className="border-abaccus-primary text-abaccus-primary hover:bg-abaccus-light/50"
+          className="border-abaccus-primary text-abaccus-primary hover:bg-abaccus-light/50 transition-all duration-200"
           size="lg"
         >
-          <Download className="mr-2 h-4 w-4" /> Exportar Resultados
+          <Download className="mr-2 h-5 w-5" /> Exportar Resultados
         </Button>
       </div>
     </div>

@@ -53,12 +53,12 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="cursor-help text-gray-400 hover:text-gray-600">
+                <div className="cursor-help text-gray-400 hover:text-gray-600 transition-colors duration-200">
                   <Info size={16} />
                 </div>
               </TooltipTrigger>
-              <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg border-none shadow-lg">
-                <p className="text-xs">{tooltip}</p>
+              <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
+                <p className="text-sm">{tooltip}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -71,7 +71,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
           value={formattedValue}
           onChange={handleChange}
           placeholder={`R$ ${placeholder}`}
-          className="pl-8 border-gray-200 focus-visible:ring-abaccus-primary/20"
+          className="pl-8 border-gray-200 focus-visible:ring-abaccus-primary/20 transition-all duration-200"
         />
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
           R$

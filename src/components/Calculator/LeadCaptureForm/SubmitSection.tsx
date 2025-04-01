@@ -14,7 +14,7 @@ export const SubmitSection: React.FC<SubmitSectionProps> = ({ onPrevious }) => {
         type="button"
         onClick={onPrevious}
         variant="outline"
-        className="border-abaccus-primary text-abaccus-primary hover:bg-abaccus-light transition-all duration-300"
+        className="border-abaccus-primary text-abaccus-primary hover:bg-abaccus-light/50 transition-all duration-300"
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
       </Button>

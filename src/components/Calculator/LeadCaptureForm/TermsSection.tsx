@@ -33,7 +33,7 @@ export const TermsSection: React.FC<TermsSectionProps> = ({
             
             onChange(syntheticEvent);
           }}
-          className="mt-1"
+          className="mt-1 data-[state=checked]:bg-abaccus-primary data-[state=checked]:border-abaccus-primary"
         />
         <Label 
           htmlFor="acceptedTerms" 

@@ -39,15 +39,15 @@ export const FormField: React.FC<FormFieldProps> = ({
   const renderIcon = () => {
     switch (icon) {
       case 'Mail':
-        return <Mail size={14} className="text-abaccus-primary" />;
+        return <Mail size={16} className="text-abaccus-primary" />;
       case 'Building':
-        return <Building size={14} className="text-abaccus-primary" />;
+        return <Building size={16} className="text-abaccus-primary" />;
       case 'User':
-        return <User size={14} className="text-abaccus-primary" />;
+        return <User size={16} className="text-abaccus-primary" />;
       case 'Phone':
-        return <Phone size={14} className="text-abaccus-primary" />;
+        return <Phone size={16} className="text-abaccus-primary" />;
       case 'Briefcase':
-        return <Briefcase size={14} className="text-abaccus-primary" />;
+        return <Briefcase size={16} className="text-abaccus-primary" />;
       default:
         return null;
     }
@@ -55,7 +55,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      <Label htmlFor={id} className="flex items-center gap-1.5">
+      <Label htmlFor={id} className="flex items-center gap-1.5 text-gray-700">
         {renderIcon()}
         {label} {required && <span className="text-red-500">*</span>}
       </Label>
@@ -67,7 +67,7 @@ export const FormField: React.FC<FormFieldProps> = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className={`focus-ring transition-all duration-300 pl-3 ${inputState}`}
+          className={`focus-ring transition-all duration-300 pl-3 ${inputState} border-gray-200 focus:border-abaccus-primary/40 focus:ring-abaccus-primary/20`}
           placeholder={placeholder}
         />
         {inputState === 'border-green-500' && (

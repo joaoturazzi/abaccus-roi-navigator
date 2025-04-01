@@ -12,8 +12,8 @@ const OperationalCostSection: React.FC<OperationalCostSectionProps> = ({
   annualCost
 }) => {
   return (
-    <div>
-      <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center">
+    <div className="bg-white p-4 rounded-md border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+      <h3 className="text-base font-medium text-gray-800 mb-3 flex items-center border-b border-gray-100 pb-2">
         Custos Operacionais Atuais
       </h3>
       <div className="space-y-2">

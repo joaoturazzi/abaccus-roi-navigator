@@ -59,24 +59,24 @@ const SelectInput: React.FC<SelectInputProps> = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="cursor-help text-gray-400 hover:text-gray-600">
+                <div className="cursor-help text-gray-400 hover:text-gray-600 transition-colors duration-200">
                   <Info size={16} />
                 </div>
               </TooltipTrigger>
-              <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg border-none shadow-lg">
-                <p className="text-xs">{tooltip}</p>
+              <TooltipContent className="bg-gray-800 text-white p-3 max-w-xs rounded-lg border-none shadow-lg">
+                <p className="text-sm">{tooltip}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
         )}
       </div>
       <Select value={value.toString()} onValueChange={handleChange}>
-        <SelectTrigger id={id} className="w-full bg-white border-gray-200 focus-visible:ring-abaccus-primary/20">
+        <SelectTrigger id={id} className="w-full bg-white border-gray-200 focus-visible:ring-abaccus-primary/20 transition-all duration-200">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="bg-white">
+        <SelectContent className="bg-white border border-gray-200 shadow-md">
           {options.map((option) => (
-            <SelectItem key={option.value.toString()} value={option.value.toString()} className="py-2">
+            <SelectItem key={option.value.toString()} value={option.value.toString()} className="py-2.5 hover:bg-abaccus-light/50 focus:bg-abaccus-light/50 cursor-pointer">
               <div>
                 <div className="font-medium">{option.label}</div>
                 {option.description && (

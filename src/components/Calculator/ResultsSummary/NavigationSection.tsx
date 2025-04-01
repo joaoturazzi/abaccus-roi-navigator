@@ -14,8 +14,8 @@ const NavigationSection: React.FC<NavigationSectionProps> = ({
     <div className="mt-5 flex justify-start">
       <Button 
         onClick={onPrevious}
-        variant="ghost"
-        className="text-gray-700 hover:bg-gray-100"
+        variant="outline"
+        className="text-abaccus-primary border-abaccus-primary/40 hover:bg-abaccus-light/50 hover:border-abaccus-primary transition-all duration-200"
       >
         <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
       </Button>

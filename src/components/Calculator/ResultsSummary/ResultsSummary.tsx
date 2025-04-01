@@ -36,11 +36,11 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto animate-fade-in">
-      <Card className="mb-8 shadow-sm border-gray-200">
+      <Card className="mb-8 shadow-md border-gray-200 hover:shadow-lg transition-all duration-300">
         <SummaryHeader />
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-5">
+            <div className="space-y-6">
               <OperationalCostSection 
                 monthlyCost={monthlyCost}
                 annualCost={annualCost}
@@ -52,7 +52,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({
               />
             </div>
             
-            <div className="space-y-5">
+            <div className="space-y-6">
               <FinancialAnalysisSection 
                 totalAnnualWaste={totalAnnualWaste}
                 abaccusCost={abaccusCost}
