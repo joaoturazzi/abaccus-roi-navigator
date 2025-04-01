@@ -1,10 +1,9 @@
-
 import React from 'react';
 import OperationalCostStep from './OperationalCostStep';
 import RevenueLossStep from './RevenueLossStep';
-import LeadCaptureForm, { LeadData } from './LeadCaptureForm';
+import LeadCaptureForm from './LeadCaptureForm';
 import ResultsSummary from './ResultsSummary';
-import { OperationalCostData, RevenueLossData, CalculatorResults } from './types';
+import { OperationalCostData, RevenueLossData, CalculatorResults, LeadData } from './types';
 
 interface CalculatorStepRendererProps {
   currentStep: number;
