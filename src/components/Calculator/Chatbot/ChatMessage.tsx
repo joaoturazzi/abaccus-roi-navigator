@@ -41,3 +41,6 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     </div>
   );
 };
+
+// Add a default export as well to support both import styles
+export default ChatMessage;

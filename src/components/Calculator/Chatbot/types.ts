@@ -14,7 +14,6 @@ export interface ChatbotProps {
 export interface MessageListProps {
   messages: Message[];
   isTyping: boolean;
-  messagesEndRef: React.RefObject<HTMLDivElement>;
 }
 
 export interface ChatInputProps {

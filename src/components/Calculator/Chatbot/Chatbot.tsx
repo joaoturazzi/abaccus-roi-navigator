@@ -3,12 +3,11 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { MessageSquare } from "lucide-react";
 import { ChatHeader } from './ChatHeader';
-import { MessageList } from './MessageList';
+import MessageList from './MessageList';
 import { ChatInput } from './ChatInput';
 import { useChatbot } from './useChatbot';
 import { ChatbotProps } from './types';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
   const isMobile = useIsMobile();

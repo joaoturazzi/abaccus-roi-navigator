@@ -42,3 +42,13 @@ export interface ImplementationOption {
   label: string;
   description: string;
 }
+
+export interface LeadData {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  businessSector?: string;
+  position?: string;
+  acceptedTerms: boolean;
+}
