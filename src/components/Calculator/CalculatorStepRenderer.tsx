@@ -36,7 +36,6 @@ const CalculatorStepRenderer: React.FC<CalculatorStepRendererProps> = ({
   handleExportPDF,
   handleContactSpecialist,
 }) => {
-  // Animation class for transitions
   const animationClass = isAnimating 
     ? "opacity-0 transform translate-y-4 transition-all duration-200" 
     : "opacity-100 transform translate-y-0 transition-all duration-300";
