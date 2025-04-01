@@ -7,11 +7,14 @@ export interface Message {
 }
 
 export interface ChatbotProps {
-  results?: {
-    roi: number;
-    potentialSavings: number;
-  };
-  onContactSpecialist: () => void;
+  results?: { roi: number; potentialSavings: number };
+  onContactSpecialist?: () => void;
+}
+
+export interface MessageListProps {
+  messages: Message[];
+  isTyping: boolean;
+  messagesEndRef: React.RefObject<HTMLDivElement>;
 }
 
 export interface ChatInputProps {
@@ -19,11 +22,7 @@ export interface ChatInputProps {
   setInputValue: (value: string) => void;
   handleSendMessage: () => void;
   handleKeyPress: (e: React.KeyboardEvent) => void;
-  onContactSpecialist: () => void;
-}
-
-export interface MessageListProps {
-  messages: Message[];
-  isTyping: boolean;
-  messagesEndRef: React.RefObject<HTMLDivElement>;
+  suggestedQuestions?: string[];
+  onSuggestedQuestion?: (question: string) => void;
+  onContactSpecialist?: () => void;
 }

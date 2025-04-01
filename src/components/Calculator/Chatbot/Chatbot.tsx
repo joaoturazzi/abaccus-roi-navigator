@@ -7,27 +7,32 @@ import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 import { useChatbot } from './useChatbot';
 import { ChatbotProps } from './types';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }) => {
+  const isMobile = useIsMobile();
   const {
     isOpen,
     setIsOpen,
     messages,
     inputValue,
     setInputValue,
+    suggestedQuestions,
     isTyping,
     messagesEndRef,
     handleSendMessage,
-    handleKeyPress
+    handleKeyPress,
+    handleSuggestedQuestion
   } = useChatbot(results, onContactSpecialist);
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className={`fixed ${isMobile ? 'bottom-2 right-2 z-50' : 'bottom-4 right-4 z-50'}`}>
       {/* Chat toggle button */}
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
           className="rounded-full h-14 w-14 bg-gradient-to-r from-abaccus-primary to-abaccus-secondary hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center"
+          aria-label="Abrir assistente virtual"
         >
           <MessageSquare className="h-6 w-6 text-white" />
         </Button>
@@ -35,7 +40,7 @@ export const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }
       
       {/* Chat window */}
       {isOpen && (
-        <div className="bg-white rounded-lg shadow-xl w-80 sm:w-96 max-h-[500px] flex flex-col overflow-hidden border border-gray-200">
+        <div className="bg-white rounded-lg shadow-xl w-80 sm:w-96 max-h-[500px] flex flex-col overflow-hidden border border-gray-200 animate-fade-in">
           <ChatHeader onClose={() => setIsOpen(false)} />
           <MessageList 
             messages={messages} 
@@ -47,6 +52,8 @@ export const Chatbot: React.FC<ChatbotProps> = ({ results, onContactSpecialist }
             setInputValue={setInputValue}
             handleSendMessage={handleSendMessage}
             handleKeyPress={handleKeyPress}
+            suggestedQuestions={suggestedQuestions}
+            onSuggestedQuestion={handleSuggestedQuestion}
             onContactSpecialist={onContactSpecialist}
           />
         </div>
