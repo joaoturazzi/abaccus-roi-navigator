@@ -41,7 +41,7 @@ const OperationalCostStep: React.FC<OperationalCostStepProps> = ({
         <div className="space-y-5">
           <QuantitySlider
             id="changesPerMonth"
-            label="Quantas alterações de regras de negócio sua equipe faz por mês?"
+            label="Quantas alterações de regras de negócio/cálculos sua equipe faz por mês?"
             value={changesPerMonth}
             onChange={onChange}
             onSliderChange={handleSliderChange}

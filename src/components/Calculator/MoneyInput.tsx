@@ -41,7 +41,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
     onChange(numericValue);
   };
 
-  const formattedValue = value ? `R$ ${formatCurrency(value / 100)}` : '';
+  const formattedValue = value ? formatCurrency(value / 100) : '';
 
   return (
     <div className="mb-4">
@@ -70,7 +70,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
           type="text"
           value={formattedValue}
           onChange={handleChange}
-          placeholder={`R$ ${placeholder}`}
+          placeholder={placeholder}
           className="pl-8 border-gray-200 focus-visible:ring-abaccus-primary/20 transition-all duration-200"
         />
         <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
