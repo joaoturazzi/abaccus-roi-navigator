@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -67,7 +66,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
           <div className="space-y-3">
             <div className="flex items-start justify-between">
               <Label className="text-sm font-medium text-gray-700">
-                Quanto você estimaria que a sua empresa perde com o atraso da implementação dessas alterações?
+                Quanto você estimaria que a sua empresa perde com o atraso/lentidão da implementação dessas alterações?
               </Label>
               <TooltipProvider>
                 <Tooltip>
@@ -206,7 +205,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
           <div className="space-y-3">
             <div className="flex items-start justify-between">
               <Label className="text-sm font-medium text-gray-700">
-                O quão crítico é esse atraso para o seu negócio?
+                O quão crítico é esse atraso/lentidão para o seu negócio?
               </Label>
               <TooltipProvider>
                 <Tooltip>
