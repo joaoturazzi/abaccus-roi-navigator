@@ -25,7 +25,8 @@ const DelayDaysSlider: React.FC<DelayDaysSliderProps> = ({
     <div className="space-y-3">
       <div className="flex items-start justify-between mb-1">
         <Label htmlFor="delayDays" className="text-sm font-medium text-gray-700">
-          Tempo médio para implementar as mudanças (em dias)?
+          Quantos dias, em média, leva para uma alteração ser publicada no sistema após a solicitação?
+          (Do pedido até a alteração entrar em produção)
         </Label>
         <TooltipProvider>
           <Tooltip>
