@@ -1,17 +1,13 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, Info } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
-import { Label } from "@/components/ui/label";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { RevenueLossData, FrequencyOption, RevenueLossOption } from './types';
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import SectionHeader from './RevenueLossStep/SectionHeader';
+import RevenueLossOptions from './RevenueLossStep/RevenueLossOptions';
+import FrequencyOptions from './RevenueLossStep/FrequencyOptions';
+import DelayDaysSlider from './RevenueLossStep/DelayDaysSlider';
+import CriticalityToggle from './RevenueLossStep/CriticalityToggle';
+import NavigationButtons from './RevenueLossStep/NavigationButtons';
 
 interface RevenueLossStepProps {
   formData: RevenueLossData;
@@ -64,206 +60,45 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
       <CardContent className="p-6">
         <div className="space-y-5">
           <div className="space-y-3">
-            <div className="flex items-start justify-between">
-              <Label className="text-sm font-medium text-gray-700">
-                Quanto você estimaria que a sua empresa perde com o atraso/lentidão da implementação dessas alterações?
-              </Label>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="cursor-help text-gray-400 hover:text-gray-600">
-                      <Info size={16} />
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
-                    <p className="text-xs">Considere perdas como: vendas não realizadas, comissionamento incorreto, inadimplência, procedimentos não aprovados, rotas ineficientes, etc.</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-            <div className="grid grid-cols-1 gap-2">
-              {revenueLossOptions.map((option) => (
-                <label 
-                  key={option.value} 
-                  className={`relative flex items-center p-2.5 rounded-md border cursor-pointer transition-colors ${
-                    revenueLossEstimate === option.value 
-                      ? 'border-abaccus-primary bg-abaccus-light/20' 
-                      : 'border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <input 
-                    type="radio" 
-                    className="sr-only"
-                    checked={revenueLossEstimate === option.value} 
-                    onChange={() => onChange('revenueLossEstimate', option.value)} 
-                  />
-                  <div className="flex items-center justify-between w-full">
-                    <div>
-                      <span className="font-medium block text-sm">{option.label}</span>
-                      <span className="text-xs text-gray-500">{option.description}</span>
-                    </div>
-                    <div className={`h-4 w-4 rounded-full border flex items-center justify-center ${
-                      revenueLossEstimate === option.value 
-                        ? 'bg-abaccus-primary border-transparent' 
-                        : 'border-gray-300'
-                    }`}>
-                      {revenueLossEstimate === option.value && (
-                        <div className="h-2 w-2 rounded-full bg-white"></div>
-                      )}
-                    </div>
-                  </div>
-                </label>
-              ))}
-            </div>
+            <SectionHeader 
+              label="Quanto você estimaria que a sua empresa perde com o atraso/lentidão da implementação dessas alterações?"
+              tooltip="Considere perdas como: vendas não realizadas, comissionamento incorreto, inadimplência, procedimentos não aprovados, rotas ineficientes, etc."
+            />
+            <RevenueLossOptions 
+              options={revenueLossOptions}
+              selectedValue={revenueLossEstimate}
+              onChange={onChange}
+            />
           </div>
           
           <div className="space-y-3">
-            <div className="flex items-start justify-between">
-              <Label className="text-sm font-medium text-gray-700">
-                Com que frequência ocorrem mudanças importantes nas regras?
-              </Label>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="cursor-help text-gray-400 hover:text-gray-600">
-                      <Info size={16} />
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
-                    <p className="text-xs">Frequência com que as regras de negócio precisam ser alteradas</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {frequencyOptions.map((option) => (
-                <label 
-                  key={option.value} 
-                  className={`relative flex flex-col items-center justify-center p-2.5 rounded-md border cursor-pointer transition-colors ${
-                    changeFrequency === option.value 
-                      ? 'border-abaccus-primary bg-abaccus-light/20' 
-                      : 'border-gray-200 hover:bg-gray-50'
-                  }`}
-                >
-                  <input 
-                    type="radio" 
-                    className="sr-only"
-                    checked={changeFrequency === option.value} 
-                    onChange={() => onChange('changeFrequency', option.value)} 
-                  />
-                  <span className="font-medium text-sm">{option.label}</span>
-                  <span className="text-xs text-gray-500 text-center mt-1">{option.description}</span>
-                </label>
-              ))}
-            </div>
+            <SectionHeader 
+              label="Com que frequência ocorrem mudanças importantes nas regras?"
+              tooltip="Frequência com que as regras de negócio precisam ser alteradas"
+            />
+            <FrequencyOptions 
+              options={frequencyOptions}
+              selectedValue={changeFrequency}
+              onChange={onChange}
+            />
           </div>
           
-          <div className="space-y-3">
-            <div className="flex items-start justify-between mb-1">
-              <Label htmlFor="delayDays" className="text-sm font-medium text-gray-700">
-                Tempo médio para implementar as mudanças (em dias)?
-              </Label>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="cursor-help text-gray-400 hover:text-gray-600">
-                      <Info size={16} />
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
-                    <p className="text-xs">Tempo médio entre a solicitação e implementação completa das alterações</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-            <div className="space-y-2">
-              <Slider
-                id="delayDays"
-                value={[delayDays]}
-                max={30}
-                step={1}
-                onValueChange={(value) => handleSliderChange('delayDays', value)}
-              />
-              <div className="flex justify-between">
-                <span className="text-xs text-gray-500">1</span>
-                <div className="flex items-center">
-                  <input
-                    type="number"
-                    value={delayDays}
-                    onChange={(e) => onChange('delayDays', Number(e.target.value))}
-                    className="border border-gray-200 rounded w-16 px-2 py-1 text-center text-sm"
-                    min={1}
-                    max={30}
-                  />
-                  <span className="ml-2 text-xs text-gray-600">dias</span>
-                </div>
-                <span className="text-xs text-gray-500">30</span>
-              </div>
-            </div>
-          </div>
+          <DelayDaysSlider 
+            value={delayDays}
+            onChange={onChange}
+            onSliderChange={handleSliderChange}
+          />
           
-          <div className="space-y-3">
-            <div className="flex items-start justify-between">
-              <Label className="text-sm font-medium text-gray-700">
-                O quão crítico é esse atraso/lentidão para o seu negócio?
-              </Label>
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <div className="cursor-help text-gray-400 hover:text-gray-600">
-                      <Info size={16} />
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-gray-800 text-white p-2 max-w-xs rounded-lg shadow-lg">
-                    <p className="text-xs">Impacto dos atrasos na experiência do cliente e na receita</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
-            <ToggleGroup 
-              type="single" 
-              value={criticalityImpact.toString()} 
-              onValueChange={handleCriticalityChange}
-              className="flex justify-between w-full"
-            >
-              <ToggleGroupItem value="0.1" className="flex-1 text-center text-sm p-2 data-[state=on]:bg-red-100 data-[state=on]:text-red-700 data-[state=on]:border-red-300">
-                <div className="flex flex-col items-center">
-                  <span className="font-medium">Baixo</span>
-                  <span className="text-xs">10% de impacto</span>
-                </div>
-              </ToggleGroupItem>
-              <ToggleGroupItem value="0.2" className="flex-1 text-center text-sm p-2 data-[state=on]:bg-orange-100 data-[state=on]:text-orange-700 data-[state=on]:border-orange-300">
-                <div className="flex flex-col items-center">
-                  <span className="font-medium">Médio</span>
-                  <span className="text-xs">20% de impacto</span>
-                </div>
-              </ToggleGroupItem>
-              <ToggleGroupItem value="0.3" className="flex-1 text-center text-sm p-2 data-[state=on]:bg-red-200 data-[state=on]:text-red-800 data-[state=on]:border-red-400">
-                <div className="flex flex-col items-center">
-                  <span className="font-medium">Alto</span>
-                  <span className="text-xs">30% de impacto</span>
-                </div>
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </div>
+          <CriticalityToggle 
+            value={criticalityImpact}
+            onValueChange={handleCriticalityChange}
+          />
 
-          <div className="mt-6 flex justify-between">
-            <Button 
-              onClick={onPrevious}
-              variant="outline"
-              className="border-gray-200 hover:bg-gray-50 text-gray-700"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
-            </Button>
-            
-            <Button 
-              onClick={onNext}
-              disabled={!isFormValid}
-              className="bg-abaccus-primary hover:bg-abaccus-primary/90 transition-all px-5"
-            >
-              Ver Resultados <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          <NavigationButtons 
+            onPrevious={onPrevious}
+            onNext={onNext}
+            isFormValid={isFormValid}
+          />
         </div>
       </CardContent>
     </Card>
