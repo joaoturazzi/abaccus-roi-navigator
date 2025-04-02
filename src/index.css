@@ -51,7 +51,7 @@
 /* Animation utilities */
 @layer utilities {
   .animate-fade-in {
-    animation: fade-in 0.4s ease-out forwards;
+    animation: fade-in 0.5s ease-out forwards;
   }
   
   .animate-pulse-light {
@@ -59,17 +59,29 @@
   }
   
   .animate-slide-up {
-    animation: slide-up 0.5s ease-out forwards;
+    animation: slide-up 0.6s ease-out forwards;
   }
   
   .animate-slide-down {
-    animation: slide-down 0.5s ease-out forwards;
+    animation: slide-down 0.6s ease-out forwards;
+  }
+  
+  .animate-bounce-in {
+    animation: bounce-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1 hover:shadow-md;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-102;
   }
   
   @keyframes fade-in {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
@@ -80,7 +92,7 @@
   @keyframes slide-up {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(24px);
     }
     to {
       opacity: 1;
@@ -91,7 +103,7 @@
   @keyframes slide-down {
     from {
       opacity: 0;
-      transform: translateY(-20px);
+      transform: translateY(-24px);
     }
     to {
       opacity: 1;
@@ -101,17 +113,31 @@
   
   @keyframes pulse {
     0%, 100% {
-      opacity: 0.5;
+      opacity: 0.6;
     }
     50% {
-      opacity: 0.8;
+      opacity: 0.9;
+    }
+  }
+  
+  @keyframes bounce-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
     }
   }
 }
 
 /* Input focus effects */
 .focus-ring {
-  @apply focus:ring-2 focus:ring-abaccus-primary/20 focus:outline-none;
+  @apply focus:ring-2 focus:ring-abaccus-primary/20 focus:outline-none focus:border-abaccus-primary/40 transition-all duration-200;
 }
 
 /* Card hover effects */
@@ -121,7 +147,7 @@
 
 /* Button hover effects */
 .btn-hover {
-  @apply transition-all duration-200 hover:shadow-md hover:translate-y-[-1px];
+  @apply transition-all duration-300 hover:shadow-md hover:translate-y-[-1px];
 }
 
 /* Toast styling improvements */
@@ -132,4 +158,18 @@
 /* Gradient text */
 .gradient-text {
   @apply bg-gradient-to-r from-abaccus-primary to-abaccus-secondary bg-clip-text text-transparent;
+}
+
+/* Glass effects */
+.glass-effect {
+  @apply backdrop-blur-sm bg-white/70 border border-white/80 shadow-sm;
+}
+
+/* Soft shadows */
+.shadow-soft {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-button {
+  box-shadow: 0 4px 6px rgba(0, 102, 153, 0.15);
 }

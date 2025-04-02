@@ -59,14 +59,14 @@ const Calculator = () => {
   } = useExportActions(results, leadData);
   
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-blue-50 rounded-xl shadow-xl">
       <Header />
       
-      <main className="flex-1 p-4 md:p-6 relative">
+      <main className="flex-1 p-4 md:p-8 relative">
         {/* Background decorations */}
         <BackgroundDecorations />
         
-        <div className="relative z-10">
+        <div className="relative z-10 max-w-5xl mx-auto">
           <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
           
           <CalculatorStepRenderer 

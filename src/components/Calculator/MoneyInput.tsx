@@ -44,8 +44,8 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
   const formattedValue = value ? formatCurrency(value / 100) : '';
 
   return (
-    <div className="mb-4">
-      <div className="flex items-center justify-between mb-1.5">
+    <div className="mb-4 bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300">
+      <div className="flex items-center justify-between mb-2">
         <Label htmlFor={id} className="text-sm font-medium text-gray-700">
           {label}
         </Label>
@@ -53,7 +53,7 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="cursor-help text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                <div className="cursor-help text-gray-400 hover:text-abaccus-primary transition-colors duration-200">
                   <Info size={16} />
                 </div>
               </TooltipTrigger>
@@ -64,16 +64,16 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
           </TooltipProvider>
         )}
       </div>
-      <div className="relative">
+      <div className="relative mt-1">
         <Input
           id={id}
           type="text"
           value={formattedValue}
           onChange={handleChange}
           placeholder={placeholder}
-          className="pl-8 border-gray-200 focus-visible:ring-abaccus-primary/20 transition-all duration-200"
+          className="pl-10 py-2.5 border-gray-200 focus-visible:ring-abaccus-primary/20 transition-all duration-200 focus-ring text-lg"
         />
-        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+        <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">
           R$
         </div>
       </div>
