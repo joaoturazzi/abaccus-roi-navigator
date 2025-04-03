@@ -67,7 +67,7 @@ export const useCalculatorHandlers = (
   // Calculate results
   const calculateResults = () => {
     const { changesPerMonth, hoursPerChange, peopleInvolved, averageSalary, implementationType } = operationalCostData;
-    const { revenueLossEstimate, changeFrequency, criticalityImpact } = revenueLossData;
+    const { revenueLossEstimate, criticalityImpact, changeFrequency = 2 } = revenueLossData;
     
     // Calculate operational costs
     const { monthlyCost, annualCost } = calculateOperationalCosts(

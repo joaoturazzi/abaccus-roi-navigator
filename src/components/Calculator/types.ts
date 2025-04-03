@@ -9,9 +9,9 @@ export interface OperationalCostData {
 
 export interface RevenueLossData {
   revenueLossEstimate: number;
-  changeFrequency: number;
   criticalityImpact: number;
-  delayDays?: number; // Make delayDays optional
+  changeFrequency?: number; // Make changeFrequency optional
+  delayDays?: number; // Already optional
 }
 
 export interface CalculatorResults {

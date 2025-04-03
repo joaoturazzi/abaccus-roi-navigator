@@ -27,8 +27,8 @@ export const useCalculatorState = () => {
   // Step 2: Revenue Loss data
   const [revenueLossData, setRevenueLossData] = useState<RevenueLossData>({
     revenueLossEstimate: 3000000, // R$ 30,000.00 in cents (middle of 10k-50k range)
-    changeFrequency: 2, // 2x per month
     criticalityImpact: 0.2, // 20%
+    changeFrequency: 2, // Keep a default value for calculations
   });
   
   // Results data

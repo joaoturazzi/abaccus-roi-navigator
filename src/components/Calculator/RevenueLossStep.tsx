@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RevenueLossData, FrequencyOption, RevenueLossOption } from './types';
+import { RevenueLossData, RevenueLossOption } from './types';
 import SectionHeader from './RevenueLossStep/SectionHeader';
 import RevenueLossOptions from './RevenueLossStep/RevenueLossOptions';
-import FrequencyOptions from './RevenueLossStep/FrequencyOptions';
 import CriticalityToggle from './RevenueLossStep/CriticalityToggle';
 import NavigationButtons from './RevenueLossStep/NavigationButtons';
 
@@ -21,14 +20,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
   onPrevious,
   onNext,
 }) => {
-  const { revenueLossEstimate, changeFrequency, criticalityImpact } = formData;
-  
-  const frequencyOptions: FrequencyOption[] = [
-    { value: 1, label: "1x por mês", description: "Raramente precisamos alterar regras" },
-    { value: 2, label: "2x por mês", description: "Ocasionalmente alteramos regras" },
-    { value: 4, label: "1x por semana", description: "Frequentemente alteramos regras" },
-    { value: 8, label: "2x por semana", description: "Constantemente alteramos regras" }
-  ];
+  const { revenueLossEstimate, criticalityImpact } = formData;
   
   const revenueLossOptions: RevenueLossOption[] = [
     { value: 1000000, label: "Até R$ 10.000 por mês", description: "Impacto financeiro baixo" },
@@ -37,7 +29,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
     { value: 15000000, label: "Acima de R$ 100.000 por mês", description: "Impacto financeiro alto" }
   ];
   
-  const isFormValid = revenueLossEstimate > 0 && changeFrequency > 0;
+  const isFormValid = revenueLossEstimate > 0;
 
   const handleCriticalityChange = (value: string) => {
     if (value) {
@@ -62,18 +54,6 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
             <RevenueLossOptions 
               options={revenueLossOptions}
               selectedValue={revenueLossEstimate}
-              onChange={onChange}
-            />
-          </div>
-          
-          <div className="space-y-3">
-            <SectionHeader 
-              label="Com que frequência ocorrem mudanças importantes nas regras?"
-              tooltip="Frequência com que as regras de negócio precisam ser alteradas"
-            />
-            <FrequencyOptions 
-              options={frequencyOptions}
-              selectedValue={changeFrequency}
               onChange={onChange}
             />
           </div>
