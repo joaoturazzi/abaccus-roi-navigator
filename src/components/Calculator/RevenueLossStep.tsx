@@ -5,7 +5,6 @@ import { RevenueLossData, FrequencyOption, RevenueLossOption } from './types';
 import SectionHeader from './RevenueLossStep/SectionHeader';
 import RevenueLossOptions from './RevenueLossStep/RevenueLossOptions';
 import FrequencyOptions from './RevenueLossStep/FrequencyOptions';
-import DelayDaysSlider from './RevenueLossStep/DelayDaysSlider';
 import CriticalityToggle from './RevenueLossStep/CriticalityToggle';
 import NavigationButtons from './RevenueLossStep/NavigationButtons';
 
@@ -22,7 +21,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
   onPrevious,
   onNext,
 }) => {
-  const { revenueLossEstimate, changeFrequency, delayDays, criticalityImpact } = formData;
+  const { revenueLossEstimate, changeFrequency, criticalityImpact } = formData;
   
   const frequencyOptions: FrequencyOption[] = [
     { value: 1, label: "1x por mês", description: "Raramente precisamos alterar regras" },
@@ -38,11 +37,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
     { value: 15000000, label: "Acima de R$ 100.000 por mês", description: "Impacto financeiro alto" }
   ];
   
-  const isFormValid = revenueLossEstimate > 0 && changeFrequency > 0 && delayDays > 0;
-
-  const handleSliderChange = (key: string, value: number[]) => {
-    onChange(key, value[0]);
-  };
+  const isFormValid = revenueLossEstimate > 0 && changeFrequency > 0;
 
   const handleCriticalityChange = (value: string) => {
     if (value) {
@@ -82,12 +77,6 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
               onChange={onChange}
             />
           </div>
-          
-          <DelayDaysSlider 
-            value={delayDays}
-            onChange={onChange}
-            onSliderChange={handleSliderChange}
-          />
           
           <CriticalityToggle 
             value={criticalityImpact}

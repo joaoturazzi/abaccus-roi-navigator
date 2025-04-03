@@ -28,7 +28,6 @@ export const useCalculatorState = () => {
   const [revenueLossData, setRevenueLossData] = useState<RevenueLossData>({
     revenueLossEstimate: 3000000, // R$ 30,000.00 in cents (middle of 10k-50k range)
     changeFrequency: 2, // 2x per month
-    delayDays: 5,
     criticalityImpact: 0.2, // 20%
   });
   
