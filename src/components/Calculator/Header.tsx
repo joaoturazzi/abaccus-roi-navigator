@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const Header = () => {
@@ -13,7 +12,7 @@ const Header = () => {
           />
         </div>
         <div className="text-white text-center sm:text-right">
-          <h1 className="text-xl md:text-2xl font-semibold text-white">Calculadora de ROI</h1>
+          <h1 className="text-xl md:text-2xl font-semibold text-white">Calculadora de Economia</h1>
           <p className="text-sm md:text-base text-gray-100 opacity-90">Calcule sua economia com o Abaccus Decision</p>
         </div>
       </div>

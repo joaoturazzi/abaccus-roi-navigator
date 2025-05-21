@@ -1,40 +1,24 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { MessageSquare, Download } from "lucide-react";
 
 interface CallToActionSectionProps {
-  roi: number;
+  potentialSavings: number;
   onExportPDF: () => void;
   onContactSpecialist: () => void;
 }
 
 const CallToActionSection: React.FC<CallToActionSectionProps> = ({
-  roi,
+  potentialSavings,
   onExportPDF,
   onContactSpecialist
 }) => {
-  // Helper function to determine CTA text based on ROI
-  const getCTAText = (roi: number) => {
-    if (roi >= 2) {
-      return (
-        <p className="text-lg font-medium">
-          <span className="text-abaccus-primary font-bold">Você está deixando dinheiro na mesa.</span> Vamos te ajudar a resolver isso?
-        </p>
-      );
-    } else {
-      return (
-        <p className="text-lg font-medium">
-          <span className="text-abaccus-primary font-bold">Mesmo que sua operação já seja eficiente,</span> o Abaccus pode trazer mais velocidade e controle.
-        </p>
-      );
-    }
-  };
-
   return (
     <div className="mt-8 p-6 bg-gradient-to-br from-abaccus-light/70 to-white rounded-lg border border-abaccus-light/30 shadow-sm">
       <div className="text-center mb-5">
-        {getCTAText(roi)}
+        <p className="text-lg font-medium">
+          <span className="text-abaccus-primary font-bold">Você está deixando dinheiro na mesa.</span> Vamos te ajudar a resolver isso?
+        </p>
       </div>
       <div className="flex flex-col sm:flex-row justify-center gap-4">
         <Button 

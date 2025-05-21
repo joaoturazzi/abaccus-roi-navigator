@@ -1,12 +1,10 @@
-
 import { useState } from 'react';
 import { toast } from "sonner";
 import { OperationalCostData, RevenueLossData, CalculatorResults, LeadData } from '../types';
 import { 
   calculateOperationalCosts, 
   calculateRevenueLosses, 
-  calculateROI,
-  sendLeadToCRM
+  calculateROI
 } from '@/lib/utils';
 
 export const useCalculatorState = () => {

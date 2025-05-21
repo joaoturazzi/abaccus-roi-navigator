@@ -1,4 +1,3 @@
-
 import { useFormNavigation } from './useFormNavigation';
 import { useFormDataHandlers } from './useFormDataHandlers';
 import { useWebhookData } from './useWebhookData';
@@ -34,21 +33,13 @@ export const useCalculatorHandlers = (
   );
 
   // Use webhook data handlers
-  const { sendOperationalCostData, sendRevenueLossData } = useWebhookData();
+  const { sendAllData } = useWebhookData();
 
   // Use calculation logic
   const { calculateResults } = useCalculationLogic();
 
-  // Create custom next handler to send data to webhook at different stages
+  // Create custom next handler
   const handleNext = () => {
-    if (currentStep === 1) {
-      // When user completes step 1, send the operational cost data
-      sendOperationalCostData(operationalCostData);
-    } else if (currentStep === 2) {
-      // When user completes step 2, send the revenue loss data
-      sendRevenueLossData(revenueLossData);
-    }
-    
     // Call the base next handler
     baseHandleNext();
   };
@@ -60,7 +51,8 @@ export const useCalculatorHandlers = (
     setLeadData,
     setResults,
     setIsResultsReady,
-    handleNext
+    handleNext,
+    sendAllData
   );
 
   return {
