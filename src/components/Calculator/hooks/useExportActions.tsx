@@ -14,10 +14,16 @@ export const useExportActions = (results: CalculatorResults | null, leadData: Le
   
   // Handle contact specialist
   const handleContactSpecialist = () => {
-    const subject = `Interesse em Abaccus Decision - ${leadData?.company || ''}`;
-    const body = `Olá Abaccus,\n\nGostaria de agendar uma demonstração do Abaccus Decision. Meus dados de contato são:\n\nNome: ${leadData?.name || ''}\nEmpresa: ${leadData?.company || ''}\nE-mail: ${leadData?.email || ''}\nTelefone: ${leadData?.phone || ''}\n\nAtenciosamente,\n${leadData?.name || ''}`;
+    // Open the Calendly link in a new tab
+    window.open('https://calendly.com/daniel-nakamura-abaccus/30min', '_blank');
     
-    window.open(`mailto:contato@abaccus.com.br?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+    // Create WhatsApp link with contact information
+    const whatsappNumber = '+5511982977001';
+    const message = `Olá, meu nome é ${leadData?.name || ''}. Gostaria de agendar uma demonstração do Abaccus Decision.`;
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open WhatsApp link in another tab
+    window.open(whatsappLink, '_blank');
     
     toast.success("Redirecionando para contato com especialista...");
   };

@@ -6,7 +6,8 @@ import {
   calculateOperationalCosts, 
   calculateROI,
   generatePDF,
-  sendLeadToCRM
+  sendLeadToCRM,
+  sendDataToWebhook
 } from '@/lib/utils';
 
 export const useCalculatorHandlers = (
@@ -47,6 +48,14 @@ export const useCalculatorHandlers = (
   const handleNext = () => {
     if (currentStep < totalSteps) {
       setIsAnimating(true);
+      
+      // Send data to webhook at different stages
+      if (currentStep === 1) {
+        sendDataToWebhook('operational_cost_data', operationalCostData);
+      } else if (currentStep === 2) {
+        sendDataToWebhook('revenue_loss_data', revenueLossData);
+      }
+      
       setTimeout(() => {
         setCurrentStep(prev => prev + 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -104,9 +113,15 @@ export const useCalculatorHandlers = (
   const handleLeadSubmit = async (data: LeadData) => {
     setLeadData(data);
     
+    // Send lead data to webhook
+    await sendDataToWebhook('lead_data', data);
+    
     // Calculate results
     const calculatedResults = calculateResults();
     setResults(calculatedResults);
+    
+    // Send results to webhook
+    await sendDataToWebhook('results', calculatedResults);
     
     // Send lead data to CRM
     try {

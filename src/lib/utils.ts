@@ -1,3 +1,4 @@
+
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import jsPDF from "jspdf";
@@ -184,8 +185,8 @@ o que pode viabilizar maior agilidade, menos dependÃªncia de TI e mais governanÃ
 // Function to trigger webhook for integration with CRM
 export async function sendLeadToCRM(userData: any, results: any) {
   try {
-    // This would be replaced with your actual webhook URL
-    const webhookUrl = 'https://hooks.zapier.com/hooks/catch/123456/abcdef/';
+    // Use the provided webhook URL
+    const webhookUrl = 'https://hook.us1.make.com/6aoy7feslc8mry35kexysmw9whtia3xf';
     
     const response = await fetch(webhookUrl, {
       method: 'POST',
@@ -208,6 +209,34 @@ export async function sendLeadToCRM(userData: any, results: any) {
     return { success: true };
   } catch (error) {
     console.error('Error sending lead to CRM:', error);
+    return { success: false, error };
+  }
+}
+
+// New function to send data to webhook at different stages
+export async function sendDataToWebhook(type: string, data: any) {
+  try {
+    const webhookUrl = 'https://hook.us1.make.com/6aoy7feslc8mry35kexysmw9whtia3xf';
+    
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type,
+        data,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`Failed to send ${type} data`);
+    }
+    
+    return { success: true };
+  } catch (error) {
+    console.error(`Error sending ${type} data to webhook:`, error);
     return { success: false, error };
   }
 }

@@ -24,9 +24,9 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
   
   const revenueLossOptions: RevenueLossOption[] = [
     { value: 1000000, label: "Até R$ 10.000 por mês", description: "Impacto financeiro baixo" },
-    { value: 3000000, label: "Entre R$ 10.000 e R$ 50.000 por mês", description: "Impacto financeiro moderado" },
-    { value: 7500000, label: "Entre R$ 50.000 e R$ 100.000 por mês", description: "Impacto financeiro significativo" },
-    { value: 15000000, label: "Acima de R$ 100.000 por mês", description: "Impacto financeiro alto" }
+    { value: 5500000, label: "Entre R$ 10.000 e R$ 100.000 por mês", description: "Impacto financeiro moderado" },
+    { value: 17500000, label: "Entre R$ 100.000 e R$ 250.000 por mês", description: "Impacto financeiro significativo" },
+    { value: 30000000, label: "Acima de R$ 250.000 por mês", description: "Impacto financeiro alto" }
   ];
   
   const isFormValid = revenueLossEstimate > 0;
