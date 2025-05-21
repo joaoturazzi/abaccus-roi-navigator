@@ -227,7 +227,16 @@ export async function sendDataToWebhook(type: string, data: any) {
   try {
     const webhookUrl = 'https://hook.us1.make.com/6aoy7feslc8mry35kexysmw9whtia3xf';
     
-    let formattedData = {
+    // Define the type with all possible properties
+    interface FormattedWebhookData {
+      eventType: string;
+      data: any;
+      timestamp: string;
+      formStage?: string; // Make formStage optional
+    }
+    
+    // Initialize the formatted data object with required fields
+    let formattedData: FormattedWebhookData = {
       eventType: type,
       data: data,
       timestamp: new Date().toISOString(),
