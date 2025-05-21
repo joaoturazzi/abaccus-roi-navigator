@@ -22,6 +22,7 @@ const RevenueLossStep: React.FC<RevenueLossStepProps> = ({
 }) => {
   const { revenueLossEstimate, criticalityImpact } = formData;
   
+  // Updated revenue loss options with the new ranges
   const revenueLossOptions: RevenueLossOption[] = [
     { value: 1000000, label: "Até R$ 10.000 por mês", description: "Impacto financeiro baixo" },
     { value: 5500000, label: "Entre R$ 10.000 e R$ 100.000 por mês", description: "Impacto financeiro moderado" },

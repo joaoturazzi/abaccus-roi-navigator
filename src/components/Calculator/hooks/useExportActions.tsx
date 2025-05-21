@@ -14,10 +14,10 @@ export const useExportActions = (results: CalculatorResults | null, leadData: Le
   
   // Handle contact specialist
   const handleContactSpecialist = () => {
-    // Open the Calendly link in a new tab
+    // Open the Calendly link in a new tab with the updated URL
     window.open('https://calendly.com/daniel-nakamura-abaccus/30min', '_blank');
     
-    // Create WhatsApp link with contact information
+    // Create WhatsApp link with contact information and updated WhatsApp number
     const whatsappNumber = '+5511982977001';
     const message = `Olá, meu nome é ${leadData?.name || ''}. Gostaria de agendar uma demonstração do Abaccus Decision.`;
     const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;

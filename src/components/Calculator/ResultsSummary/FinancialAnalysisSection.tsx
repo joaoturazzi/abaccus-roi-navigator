@@ -32,7 +32,7 @@ const FinancialAnalysisSection: React.FC<FinancialAnalysisSectionProps> = ({
           <span className="text-gray-600">Total desperdiçado por ano:</span>
           <span className="font-medium text-red-600">{formatCurrency(totalAnnualWaste)}</span>
         </div>
-        {/* Investment cost is hidden but still used in calculations */}
+        {/* Investment cost is now hidden from UI completely, but still used in calculations */}
         <div className="flex justify-between items-center py-2 border-b border-gray-100">
           <span className="text-gray-600">Economia potencial anual:</span>
           <span className="font-medium text-green-600">{formatCurrency(potentialSavings)}</span>

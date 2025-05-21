@@ -49,11 +49,77 @@ export const useCalculatorHandlers = (
     if (currentStep < totalSteps) {
       setIsAnimating(true);
       
-      // Send data to webhook at different stages
+      // Send data to webhook at different stages with complete information from each step
       if (currentStep === 1) {
-        sendDataToWebhook('operational_cost_data', operationalCostData);
+        // When user completes step 1, send the operational cost data
+        const { changesPerMonth, hoursPerChange, peopleInvolved, averageSalary, implementationType } = operationalCostData;
+        
+        // Calculate costs to include in webhook
+        const { monthlyCost, annualCost } = calculateOperationalCosts(
+          changesPerMonth,
+          hoursPerChange,
+          peopleInvolved,
+          averageSalary,
+          implementationType
+        );
+        
+        // Send comprehensive data including both inputs and calculated values
+        sendDataToWebhook('operational_cost_data', {
+          inputs: {
+            changesPerMonth,
+            hoursPerChange,
+            peopleInvolved,
+            averageSalaryInCents: averageSalary,
+            averageSalaryFormatted: (averageSalary / 100).toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }),
+            implementationType
+          },
+          calculated: {
+            monthlyCost,
+            annualCost,
+            monthlyCostFormatted: monthlyCost.toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }),
+            annualCostFormatted: annualCost.toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            })
+          }
+        });
       } else if (currentStep === 2) {
-        sendDataToWebhook('revenue_loss_data', revenueLossData);
+        // When user completes step 2, send the revenue loss data
+        const { revenueLossEstimate, criticalityImpact, changeFrequency } = revenueLossData;
+        
+        // Calculate monthly and annual revenue loss for the webhook
+        const monthlyRevenueLoss = revenueLossEstimate / 100; // Convert from cents to BRL
+        const annualRevenueLoss = monthlyRevenueLoss * 12;
+        
+        sendDataToWebhook('revenue_loss_data', {
+          inputs: {
+            revenueLossEstimateInCents: revenueLossEstimate,
+            revenueLossEstimateFormatted: (revenueLossEstimate / 100).toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }),
+            criticalityImpact: criticalityImpact * 100 + '%', // Convert to percentage
+            changeFrequency
+          },
+          calculated: {
+            monthlyRevenueLoss,
+            annualRevenueLoss,
+            monthlyRevenueLossFormatted: monthlyRevenueLoss.toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }),
+            annualRevenueLossFormatted: annualRevenueLoss.toLocaleString('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            })
+          }
+        });
       }
       
       setTimeout(() => {
@@ -113,19 +179,53 @@ export const useCalculatorHandlers = (
   const handleLeadSubmit = async (data: LeadData) => {
     setLeadData(data);
     
-    // Send lead data to webhook
+    // Send lead data to webhook with comprehensive information
     await sendDataToWebhook('lead_data', data);
     
     // Calculate results
     const calculatedResults = calculateResults();
     setResults(calculatedResults);
     
-    // Send results to webhook
-    await sendDataToWebhook('results', calculatedResults);
+    // Create a comprehensive summary of all data for the webhook
+    const completeDataSummary = {
+      step1_operationalCosts: {
+        inputs: operationalCostData,
+        calculatedMonthlyCost: calculatedResults.monthlyCost,
+        calculatedAnnualCost: calculatedResults.annualCost
+      },
+      step2_revenueLosses: {
+        inputs: revenueLossData,
+        calculatedMonthlyLoss: calculatedResults.monthlyRevenueLoss,
+        calculatedAnnualLoss: calculatedResults.annualRevenueLoss
+      },
+      step3_userData: data,
+      finalResults: {
+        totalAnnualWaste: calculatedResults.totalAnnualWaste,
+        potentialSavings: calculatedResults.potentialSavings,
+        roi: calculatedResults.roi,
+        // Format values for better readability
+        formattedTotalWaste: calculatedResults.totalAnnualWaste.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        }),
+        formattedPotentialSavings: calculatedResults.potentialSavings.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        }),
+        formattedROI: calculatedResults.roi.toFixed(1) + 'x'
+      }
+    };
     
-    // Send lead data to CRM
+    // Send comprehensive results to webhook
+    await sendDataToWebhook('results', completeDataSummary);
+    
+    // Send lead data to CRM with all information
     try {
-      await sendLeadToCRM(data, calculatedResults);
+      await sendLeadToCRM(data, {
+        ...calculatedResults,
+        operationalCostData,
+        revenueLossData,
+      });
     } catch (error) {
       console.error('Error sending lead data:', error);
     }
