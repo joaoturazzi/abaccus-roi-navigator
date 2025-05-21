@@ -28,14 +28,14 @@ export const useLeadSubmitHandler = (
     setResults(calculatedResults);
     
     // Create a comprehensive summary of all data for the webhook
-    const completeDataSummary = createDataSummary(
+    const completeDataSummary = {
       operationalCostData,
       revenueLossData,
-      data,
-      calculatedResults
-    );
+      userData: data,
+      results: calculatedResults
+    };
     
-    // Send comprehensive results to webhook
+    // Send comprehensive results to webhook with all_data type for special formatting
     await sendResultsData(completeDataSummary);
     
     // Send lead data to CRM with all information

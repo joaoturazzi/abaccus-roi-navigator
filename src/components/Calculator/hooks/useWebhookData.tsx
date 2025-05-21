@@ -87,7 +87,7 @@ export const useWebhookData = () => {
 
   // Send results data to webhook
   const sendResultsData = (completeDataSummary: any) => {
-    return sendDataToWebhook('results', completeDataSummary);
+    return sendDataToWebhook('all_data', completeDataSummary);
   };
 
   return {
